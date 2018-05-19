@@ -1,0 +1,61 @@
+import os
+from subprocess import call
+
+top = '.' 
+out = 'build_directory' 
+
+#def configure(ctx): 
+        #print('→ configuring the project in ' + ctx.path.abspath())
+	#dir_path = os.path.dirname(os.path.realpath(__file__))
+	#os.environ["WORKSPACE_BASE"] = dir_path
+
+#def ping(ctx):
+        #print('→ ping from ' + ctx.path.abspath())
+        #ctx.recurse('src')
+
+#def build(ctx):
+	#print('Time to fuckin build')
+	#call('make')
+
+def options(opt):
+        opt.load('compiler_c compiler_cxx')
+
+def configure(cnf):
+        cnf.load('compiler_c compiler_cxx')
+        cnf.check(features='cxx cxxprogram', lib=['m'], cxxflags=['-Wall','-std=gnu++11'], defines=['var=foo'], uselib_store='M')
+
+def build(bld):
+        # bld(features='c cshlib', source='b.c', target='mylib')
+        bld.recurse('lodepng')
+        bld(features='c cxx', source='algebra.cpp', target='algebra', name='algebra')
+        bld(features='c cxx', source='camera.cpp', target='camera', cxxflags=['-Wall','-std=gnu++11'], name='camera')
+        bld(features='c cxx', source='material.cpp', target='material', name='material')
+        bld(features='c cxx', 
+                source='misc.cpp', 
+                target='misc', 
+                cxxflags=['-Wall','-std=gnu++11'], 
+                name='misc',
+                use=['lodepng'])
+        bld(features='c cxx', source='photon.cpp', target='photon', name='photon')
+        bld(features='c cxx', source='polyroots.cpp', target='polyroots', name='polyroots')
+        bld(features='c cxx', 
+                source='scene.cpp', 
+                target='scene', 
+                cxxflags=['-Wall','-std=gnu++11'], 
+                name='scene', 
+                use=['misc', 'camera', 'photon','material'])
+        bld(features='c cxx cxxprogram', 
+                source='main.cpp', 
+                target='app', 
+                use=['M','algebra','scene'], 
+                lib=['dl'])
+
+# def build(ctx):
+
+#     # Illustrate simple use of run_py_script
+#     ctx(
+#         features='run_py_script',
+#         source='get_simulation_draws.py',
+#         target=ctx.path_to(ctx, 'OUT_DATA', 'initial_locations.csv'),
+#         name='get_simulation_draws'
+#     )
