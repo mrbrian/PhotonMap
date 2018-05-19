@@ -1,0 +1,12 @@
+import os
+from subprocess import call
+
+top = '..' 
+out = '.' 
+
+def build(bld):
+        bld(features='c cxx cxxprogram', 
+                source='TestPhoton.cpp', 
+                target='TestPhoton', 
+                name='TestPhoton',
+                use=['GTEST', 'PTHREAD'])
