@@ -1,0 +1,3 @@
+build_directory
+*.o
+sw/x64
