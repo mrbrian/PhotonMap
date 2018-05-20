@@ -1,0 +1,56 @@
+import os
+
+top = '.' 
+out = 'build_directory' 
+
+def options(opt):
+        opt.load('compiler_cxx')
+
+def configure(cnf):
+        cnf.load('compiler_cxx')
+        cnf.check(features='cxx cxxprogram', 
+                lib=['m'], 
+                cxxflags=['-Wall','-std=gnu++11'], 
+                defines=['var=foo'], 
+                uselib_store='M')
+
+def build(bld):
+        bld.recurse('lodepng')
+
+        bld(features='cxx', source='algebra.cpp', target='algebra', name='algebra')
+        bld(features='cxx', source='camera.cpp', target='camera', cxxflags=['-Wall','-std=gnu++11'], name='camera')
+        bld(features='cxx', source='material.cpp', target='material', name='material')
+        bld(features='cxx', 
+                source='misc.cpp', 
+                target='misc', 
+                cxxflags=['-Wall','-std=gnu++11'], 
+                name='misc',
+                use=['lodepng'])
+        bld(features='cxx', source='photon.cpp', target='photon', name='photon')
+        bld(features='cxx', source='polyroots.cpp', target='polyroots', name='polyroots')
+        bld(features='cxx', 
+                source='scene.cpp', 
+                target='scene', 
+                cxxflags=['-Wall','-std=gnu++11'], 
+                name='scene', 
+                use=['misc', 'camera', 'photon','material'])
+
+        bld.program(
+                source       = 'main.cpp', 
+                target       = 'app', 
+
+                includes     = ['.'], 
+                # defines      = ['LINUX=1', 'BIDULE'],
+
+                # lib          = ['m'], 
+                # libpath      = ['/usr/lib'],
+
+                # rpath        = ['/opt/kde/lib'],
+                # vnum         = '1.2.3',
+
+                # idx          = 123, 
+                # install_path = '${SOME_PATH}/bin', 
+                cxxflags       = ['-Wall', '-std=gnu++11'],
+                use=['algebra', 'scene'])
+        
+        bld.recurse('tests')

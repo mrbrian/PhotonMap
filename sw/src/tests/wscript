@@ -1,0 +1,23 @@
+import os
+from subprocess import call
+
+top = '..' 
+out = '.' 
+
+def options(opt):
+        opt.load('compiler_cxx waf_unit_test')
+        
+# def configure(conf):
+#         print 'tests'
+#         conf.load('compiler_cxx waf_unit_test')
+
+def build(bld):
+        bld(features='cxx cxxprogram test', 
+                source='TestPhoton.cpp', 
+                target='TestPhoton', 
+                name='TestPhoton',
+                use=['GTEST', 'PTHREAD'])
+
+        from waflib.Tools import waf_unit_test
+        bld.add_post_fun(waf_unit_test.summary)
+

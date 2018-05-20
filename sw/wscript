@@ -1,43 +1,24 @@
 import os
-from subprocess import call
 
 top = '.' 
 out = 'build_directory' 
 
 def options(opt):
-        opt.load('compiler_c compiler_cxx')
+        opt.load('compiler_cxx')
 
 def configure(cnf):
-        cnf.load('compiler_c compiler_cxx')
-        cnf.check(features='cxx cxxprogram', lib=['pthread'], cxxflags=['-Wall','-std=gnu++11'], defines=['var=foo'], uselib_store='PTHREAD')
+        cnf.load('compiler_cxx')
+        cnf.check(features='cxx cxxprogram', 
+                lib=['pthread', 'gtest'], 
+                cxxflags=['-Wall','-std=gnu++11'], 
+                uselib_store='PTHREAD')
+        cnf.check(features='cxx cxxprogram', 
+                cxxflags=['-Wall','-std=gnu++11'])
+                # defines=['var=foo'], 
         # cnf.env.append_value('INCLUDES', ['/usr/local/include'])
         cnf.env.LIB_GTEST = ['gtest']
         cnf.env.LIBPATH_GTEST = [os.path.join(os.getcwd(), '/usr/local/lib')]
         cnf.env.INCLUDES_GTEST = [os.path.join(os.getcwd(), 'usr/local/include')]
 
 def build(bld):
-        # bld(features='c cshlib', source='b.c', target='mylib')
-        bld.recurse('lodepng')
-        bld.recurse('tests')
-        bld(features='c cxx', source='algebra.cpp', target='algebra', name='algebra')
-        bld(features='c cxx', source='camera.cpp', target='camera', cxxflags=['-Wall','-std=gnu++11'], name='camera')
-        bld(features='c cxx', source='material.cpp', target='material', name='material')
-        bld(features='c cxx', 
-                source='misc.cpp', 
-                target='misc', 
-                cxxflags=['-Wall','-std=gnu++11'], 
-                name='misc',
-                use=['lodepng'])
-        bld(features='c cxx', source='photon.cpp', target='photon', name='photon')
-        bld(features='c cxx', source='polyroots.cpp', target='polyroots', name='polyroots')
-        bld(features='c cxx', 
-                source='scene.cpp', 
-                target='scene', 
-                cxxflags=['-Wall','-std=gnu++11'], 
-                name='scene', 
-                use=['misc', 'camera', 'photon','material'])
-        bld(features='c cxx cxxprogram', 
-                source='main.cpp', 
-                target='app', 
-                use=['algebra','scene'], 
-                lib=['dl'])
+        bld.recurse('src')
