@@ -9,10 +9,10 @@ def options(opt):
 def configure(cnf):
         cnf.load('compiler_cxx')
         cnf.check(features='cxx cxxprogram', 
-                lib=['m'], 
+                lib=['gtest', 'pthread'], 
                 cxxflags=['-Wall','-std=gnu++11'], 
                 defines=['var=foo'], 
-                uselib_store='M')
+                uselib_store='GTEST PTHREAD')
 
 def build(bld):
         bld.recurse('lodepng')
@@ -52,5 +52,5 @@ def build(bld):
                 # install_path = '${SOME_PATH}/bin', 
                 cxxflags       = ['-Wall', '-std=gnu++11'],
                 use=['algebra', 'scene'])
-        
+
         bld.recurse('tests')
