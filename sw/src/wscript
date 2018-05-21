@@ -16,55 +16,10 @@ def configure(cnf):
 
 def build(bld):
         bld.recurse('lodepng')
-
-        bld(features='cxx', source='algebra.cpp', target='algebra', name='algebra')
-        bld(features='cxx', source='camera.cpp', target='camera', cxxflags=['-Wall','-std=gnu++11'], name='camera')
-        bld(features='cxx', source='material.cpp', target='material', name='material')
-        bld(features='cxx',
-                source='misc.cpp',
-                target='misc',
-                cxxflags=['-Wall','-std=gnu++11'],
-                name='misc',
-                use=['lodepng'])
-        bld(features='cxx',
-                source='Light.cpp',
-                cxxflags=['-Wall','-std=gnu++11'],
-                target='Light',
-                name='Light',
-                includes=['.'],
-                use=['algebra'])
-        bld(features='cxx',
-                cxxflags=['-Wall','-std=gnu++11'],
-                source='LightObject.cpp',
-                target='LightObject',
-                includes=['.'],
-                name='LightObject')
-        bld(features='cxx', source='photon.cpp', target='photon', name='photon')
-        bld(features='cxx', source='polyroots.cpp', target='polyroots', name='polyroots')
-        bld(features='cxx',
-                source='scene.cpp',
-                includes=['.'],
-                target='scene',
-                cxxflags=['-Wall','-std=gnu++11'],
-                name='scene',
-                use=['misc', 'camera', 'photon','material','Light','LightObject'])
-
         bld.program(
-                source       = 'main.cpp',
+                source       = bld.path.ant_glob('*.cpp'),
                 target       = 'app',
-
                 includes     = ['.'],
-                # defines      = ['LINUX=1', 'BIDULE'],
-
-                # lib          = ['m'],
-                # libpath      = ['/usr/lib'],
-
-                # rpath        = ['/opt/kde/lib'],
-                # vnum         = '1.2.3',
-
-                # idx          = 123,
-                # install_path = '${SOME_PATH}/bin',
                 cxxflags       = ['-Wall', '-std=gnu++11'],
-                use=['algebra', 'scene','LightObject', 'Light'])
-
+                use=['algebra', 'scene','LightObject', 'Light', 'lodepng'])
         bld.recurse('tests')
