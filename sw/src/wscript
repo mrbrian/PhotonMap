@@ -26,14 +26,28 @@ def build(bld):
                 cxxflags=['-Wall','-std=gnu++11'],
                 name='misc',
                 use=['lodepng'])
+        bld(features='cxx',
+                source='Light.cpp',
+                cxxflags=['-Wall','-std=gnu++11'],
+                target='Light',
+                name='Light',
+                includes=['.'],
+                use=['algebra'])
+        bld(features='cxx',
+                cxxflags=['-Wall','-std=gnu++11'],
+                source='LightObject.cpp',
+                target='LightObject',
+                includes=['.'],
+                name='LightObject')
         bld(features='cxx', source='photon.cpp', target='photon', name='photon')
         bld(features='cxx', source='polyroots.cpp', target='polyroots', name='polyroots')
         bld(features='cxx',
                 source='scene.cpp',
+                includes=['.'],
                 target='scene',
                 cxxflags=['-Wall','-std=gnu++11'],
                 name='scene',
-                use=['misc', 'camera', 'photon','material'])
+                use=['misc', 'camera', 'photon','material','Light','LightObject'])
 
         bld.program(
                 source       = 'main.cpp',
@@ -51,6 +65,6 @@ def build(bld):
                 # idx          = 123,
                 # install_path = '${SOME_PATH}/bin',
                 cxxflags       = ['-Wall', '-std=gnu++11'],
-                use=['algebra', 'scene'])
+                use=['algebra', 'scene','LightObject', 'Light'])
 
         bld.recurse('tests')

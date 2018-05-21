@@ -1,5 +1,6 @@
 #include <algebra.h>
 #include <gtest/gtest.h>
+#include <Light.h>
 #include <scene.h>
 #include <SceneTest.h>
 #include <stdio.h>
@@ -7,7 +8,7 @@
 TEST_F(SceneTest, CorrectAmountOfPhotons)
 {
 	vector<photon*> out_photons;
-	MockLight light(Point3D(0,0,0), Color(0,0,0), 0);
+	Light light(Point3D(0,0,0), Color(0,0,0), 0);
 
 	patient_->lights.push_back(&light);
 	patient_->initialize_photons(1, &out_photons);

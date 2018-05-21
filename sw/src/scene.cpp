@@ -1,4 +1,6 @@
-#include "scene.h"
+#include <Light.h>
+#include <LightObject.h>
+#include <scene.h>
 
 //#define DEBUG 1
 //#define debugging_enabled 1
@@ -16,92 +18,6 @@ const double m_samples_per_pixel = 10;
 #define MAX_DEPTH   5
 #define BG_COLOR    Color(1,0,0)
 #define NORM_EPSILON     0.001
-
-Light::Light(Point3D pos, Color c, double in_watts)
-{
-    position = pos;
-    clr = c;
-    watts = in_watts;
-}
-
-void Light::emit_photons(int to_emit, float energy, vector<photon*> *out_photons)
-{
-    int num_emit = 0;
-    while (num_emit < to_emit)
-    {
-        double x;
-        double y;
-        double z;
-        Vector3D dir;
-        do
-        {
-            x = misc::RAND_1();
-            y = misc::RAND_1();
-            z = misc::RAND_1();
-            dir = Vector3D(x, y, z);
-        }
-        while (dir.length2() > 1);
-        dir.normalize();
-        photon *p = new photon(position, dir, clr, energy);       // only using the diffuse color..(?)
-
-        out_photons->push_back(p);
-        num_emit++;
-    }
-}
-
-
-LightObject::LightObject(Point3D pos, Color c, double in_watts, SceneObject *o)
-    : Light(pos, c, in_watts)
-{
-    obj = o;
-
-}
-
-
-void LightObject::emit_photons(int to_emit, float energy, vector<photon*> *out_photons)
-{
-    int num_emit = 0;
-    while (num_emit < to_emit)
-    {
-        Vector3D norm;
-        Point3D p_pos;
-        obj->point_on_surface(p_pos, norm);
-        norm.normalize();
-
-        double x;
-        double y;
-        double z;
-        Vector3D dir;
-        do
-        {
-            x = misc::RAND_1();
-            y = misc::RAND_1();
-            z = misc::RAND_1();
-            dir = Vector3D(x, y, z);
-        }
-        while (dir.length2() > 1);
-        dir.normalize();
-
-        photon *p = new photon(p_pos, dir, clr, energy);
-
-        out_photons->push_back(p);
-        num_emit++;
-    }
-}
-
-
-double Light::intersect(Point3D o, Vector3D v, Vector3D *n)
-{
-    o = Point3D();  // get rid of warnings
-    v = *n;
-    return -1;
-}
-
-
-double LightObject::intersect(Point3D o, Vector3D v, Vector3D *n)
-{
-    return obj->intersect(o, v, n);
-}
 
 // ----------------------------------------------------------------------------
 // BuildOrthonormalSystem ()
@@ -919,6 +835,19 @@ Scene *Scene::cornellBoxScene(int width, int height)
     return s;
 }
 
+void Scene::Transform(Matrix4x4 m)
+{
+    for(std::vector<SceneObject*>::iterator it = objects.begin(); it != objects.end(); ++it)
+    {
+        SceneObject *obj = (*it);
+        obj->Transform(m);
+    }
+    for(std::vector<Light*>::iterator it = lights.begin(); it != lights.end(); ++it)
+    {
+        Light *obj = (*it);
+        obj->Transform(m);
+    }
+}
 
 // cornell scene
 Scene *Scene::planeScene(int width, int height)
