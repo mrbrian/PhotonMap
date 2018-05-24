@@ -16,10 +16,11 @@ def configure(cnf):
 
 def build(bld):
         bld.recurse('lodepng')
-        bld.program(
-                source       = bld.path.ant_glob('*.cpp'),
-                target       = 'app',
-                includes     = ['.'],
-                cxxflags       = ['-Wall', '-std=gnu++11'],
-                use=['algebra', 'scene','LightObject', 'Light', 'lodepng'])
+        bld(features     = 'cxx',
+                source   = bld.path.ant_glob('*.cpp'),
+                target   = 'scene',
+                includes = ['.'],
+                cxxflags = ['-Wall', '-std=gnu++11'],
+		use=['lodepng'])
+#                use=['algebra', 'LightObject', 'Light', 'lodepng'])
         bld.recurse('tests')
