@@ -4,18 +4,9 @@
 #include "material.h"
 #include "polyroots.h"
 #include "misc.h"
+#include <sceneObject.h>
 
-class SceneObject
-{
-public:
-    Material *material;
-    Vector3D normal;
-
-    virtual char const *type();
-    virtual void Transform(Matrix4x4 m);
-    virtual void point_on_surface(Point3D &pos, Vector3D &norm);
-    virtual double intersect(Point3D o, Vector3D v, Vector3D *n);
-};
+class Quad;
 
 class Triangle : public SceneObject
 {
@@ -27,21 +18,6 @@ public:
     double area(Point3D a, Point3D b, Point3D c);
     double intersect(Point3D o, Vector3D v, Vector3D *n);
     void Transform(Matrix4x4 m);
-};
-
-class Quad : public SceneObject
-{
-public:
-    Triangle **tris;    // array of triangle pointers
-    Point3D *points;
-
-    char const *type() override;
-    ~Quad();
-    Quad(Point3D a, Point3D b, Point3D c, Point3D d, Material *mat);
-    void Transform(Matrix4x4 m) override;
-    double intersect(Point3D o, Vector3D v, Vector3D *n) override;
-    Point3D ImageToWorldSpace(int x, int y, int imgWidth, int imgHeight);
-    void point_on_surface(Point3D &pos, Vector3D &normal) override;
 };
 
 class Sphere : public SceneObject

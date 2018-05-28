@@ -1,5 +1,6 @@
 #include <Light.h>
 #include <LightObject.h>
+#include <quad.h>
 #include <scene.h>
 
 //#define DEBUG 1
