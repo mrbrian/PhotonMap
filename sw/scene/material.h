@@ -6,6 +6,7 @@
 class Material
 {
 public:
+    virtual ~Material() { }
     Material() { p = 0; }
     Material(Color a, Color d, Color s, double p, Color r);
     Material(Color a, Color d, Color s, double p);
@@ -42,4 +43,3 @@ public:
 };
 
 #endif // MATERIAL
-

@@ -5,6 +5,10 @@ char const *SceneObject::type()
     return "SceneObject";
 }
 
+SceneObject::~SceneObject()
+{
+}
+
 void SceneObject::Transform(Matrix4x4 m)
 {
     m = 0;

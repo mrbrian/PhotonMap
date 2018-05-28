@@ -1,5 +1,6 @@
 #include <cornellBoxScene.h>
 #include <LightObject.h>
+#include <material.h>
 #include <quad.h>
 #include <scene.h>
 #include <shapes.h>
@@ -26,12 +27,12 @@ CornellBoxScene::CornellBoxScene(int width, int height)
 
     scene->imgPlane = cam.calc_img_plane();
 
-    Material *mat_ceil  = new Material(Color(0, 0, 0), Color(1, 1, 1), Color(0, 0, 0), 1, Color(0, 0, 0));
-    Material *mat_grn   = new Material(Color(0, 0, 0), Color(0, 0.5f, 0), Color(0, 0, 0), 10, Color(0, 0, 0));
-    Material *mat_red   = new Material(Color(0, 0, 0), Color(0.5f, 0, 0), Color(0, 0, 0), 10, Color(0, 0, 0));
-    Material *mat_light = new Material(Color(0, 0, 0), Color(0.5f, 0, 0), Color(1, 1, 1), 10, Color(0, 0, 0));
-    Material *mat_shiny = new Material(Color(0, 0, 0), Color(0,0,0), Color(1, 1, 1), 10, Color(1,1,1));
-    Material *mat_floor = new Material(Color(0, 0, 0), Color(0.6f, 0.6f, 0.6f), Color(0, 0, 0), 10, Color(0, 0, 0));
+    mat_ceil  = new Material(Color(0, 0, 0), Color(1, 1, 1), Color(0, 0, 0), 1, Color(0, 0, 0));
+    mat_grn   = new Material(Color(0, 0, 0), Color(0, 0.5f, 0), Color(0, 0, 0), 10, Color(0, 0, 0));
+    mat_red   = new Material(Color(0, 0, 0), Color(0.5f, 0, 0), Color(0, 0, 0), 10, Color(0, 0, 0));
+    mat_light = new Material(Color(0, 0, 0), Color(0.5f, 0, 0), Color(1, 1, 1), 10, Color(0, 0, 0));
+    mat_shiny = new Material(Color(0, 0, 0), Color(0,0,0), Color(1, 1, 1), 10, Color(1,1,1));
+    mat_floor = new Material(Color(0, 0, 0), Color(0.6f, 0.6f, 0.6f), Color(0, 0, 0), 10, Color(0, 0, 0));
 
     // Ceiling
     Quad *q_1 = new Quad(

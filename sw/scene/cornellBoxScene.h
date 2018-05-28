@@ -1,6 +1,7 @@
 #include <I_Scene.h>
 #include <vector>
 
+class Material;
 class photon;
 class Scene;
 
@@ -15,4 +16,11 @@ public:
 private:
 	void delete_objects();
     Scene *scene;
+
+	Material *mat_ceil;
+	Material *mat_grn;
+	Material *mat_red;
+	Material *mat_light;
+	Material *mat_shiny;
+	Material *mat_floor;
 };

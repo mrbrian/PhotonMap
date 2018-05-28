@@ -8,6 +8,8 @@ char const *Quad::type()
 
 Quad::~Quad()
 {
+    delete tris[0];
+    delete tris[1];
     delete [] tris;
     delete [] points;
 }
