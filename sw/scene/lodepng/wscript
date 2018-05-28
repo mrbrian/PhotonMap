@@ -1,13 +1,13 @@
 import os
 from subprocess import call
 
-top = '.' 
-out = 'build_directory' 
+top = '.'
+out = 'build_directory'
 
 def build(bld):
         # bld(features='c cshlib', source='b.c', target='mylib')
-        bld(features='c cxx', 
-                source='lodepng.cpp', 
-                target='lodepng', 
-                cxxflags=['-Wall','-std=gnu++11'], 
+        bld(features='c cxx',
+                source='lodepng.cpp',
+                target='lodepng',
+                cxxflags=['-Wall','-std=gnu++11', '-g'], 
                 name='lodepng')

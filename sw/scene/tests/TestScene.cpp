@@ -5,15 +5,15 @@
 #include <SceneTest.h>
 #include <stdio.h>
 
-TEST_F(SceneTest, CorrectAmountOfPhotons)
-{
-	vector<photon*> out_photons;
-	Light light(Point3D(0,0,0), Color(0,0,0), 0);
+// TEST_F(SceneTest, CorrectAmountOfPhotons)
+// {
+// 	vector<photon*> out_photons;
+// 	Light light(Point3D(0,0,0), Color(0,0,0), 0);
 
-	patient_->lights.push_back(&light);
-	patient_->initialize_photons(1, &out_photons);
+// 	patient_->lights.push_back(&light);
+// 	patient_->initialize_photons(1, &out_photons);
 
-	EXPECT_EQ(1, out_photons.size());
+// 	EXPECT_EQ(1, out_photons.size());
 
 	//setup scene
 
@@ -28,7 +28,20 @@ TEST_F(SceneTest, CorrectAmountOfPhotons)
 	// should be only one
 
 	// EXPECT_EQ(1, out_photons.size());
-}
+// }
+
+
+// TEST_F(SceneTest, WillDeletePhotons)
+// {
+// 	vector<photon*> out_photons;
+// 	Light light(Point3D(0,0,0), Color(0,0,0), 0);
+// 	Scene* scene(light);
+
+// 	vector<photon*> out_photons;
+// 	scene->emit_photons(1, &out_photons);
+
+// 	EXPECT_EQ(1, out_photons.size());
+// }
 
 int main(int argc, char** argv)
 {

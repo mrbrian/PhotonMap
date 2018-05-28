@@ -20,7 +20,6 @@ def build(bld):
                 source   = bld.path.ant_glob('*.cpp'),
                 target   = 'scene',
                 includes = ['.'],
-                cxxflags = ['-Wall', '-std=gnu++11'],
+                cxxflags = ['-Wall', '-std=gnu++11', '-g'],
 		use=['lodepng'])
-#                use=['algebra', 'LightObject', 'Light', 'lodepng'])
         bld.recurse('tests')

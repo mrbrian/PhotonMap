@@ -3,21 +3,10 @@ import os
 top = '.'
 out = 'build_directory'
 
-def options(opt):
-        opt.load('compiler_cxx')
-
-def configure(cnf):
-        cnf.load('compiler_cxx')
-        cnf.check(features='cxx cxxprogram',
-                lib=['gtest', 'pthread'],
-                cxxflags=['-Wall','-std=gnu++11','-g'],
-                defines=['var=foo'],
-                uselib_store='GTEST PTHREAD')
-
 def build(bld):
         bld.program(
                 source       = bld.path.ant_glob('*.cpp'),
                 target       = 'app',
                 includes     = ['../scene'],
-                cxxflags       = ['-Wall', '-std=gnu++11'],
+                cxxflags       = ['-Wall', '-std=gnu++11', '-g'],
                 use=['scene', 'lodepng'])

@@ -1,13 +1,15 @@
 
-#include <time.h>
-#include <stdio.h>
-#include <assert.h>
 #include "algebra.h"
-#include "scene.h"
-#include <vector>
-#include <iostream>
 #include "kdtree/kdtree.h"
 #include "misc.h"
+#include "scene.h"
+#include <assert.h>
+#include <cornellBoxScene.h>
+#include <I_Scene.h>
+#include <iostream>
+#include <stdio.h>
+#include <time.h>
+#include <vector>
 
 #define DEF_WIDTH   750
 #define DEF_HEIGHT  750
@@ -74,11 +76,19 @@ void final_render(Scene &scene, vector<photon*> *photons, const char* outputStr)
     delete [] resultImg;
 }
 
+void delete_photon_map(vector<photon*> &map)
+{
+    for (std::vector< photon* >::iterator it = map.begin() ; it != map.end(); ++it)
+    {
+        delete (*it);
+    }
+    map.clear();
+}
+
 int main(int argc, char *argv[])
 {
-    Scene scene;
+    I_Scene *scene;
 
-    printf("wtf");
     // image width and height
     int width  = DEF_WIDTH;
     int height = DEF_HEIGHT;
@@ -89,17 +99,19 @@ int main(int argc, char *argv[])
         height = atoi(argv[2]);
     }
 
-    scene = *Scene::cornellBoxScene(width, height);
+    scene = new CornellBoxScene(width, height);
 
     // start timing...
     clock_t start = clock();
 
     vector<photon*> photon_map;
-    scene.emit_photons(100000, &photon_map);
+    scene->emit_photons(10, &photon_map);
 
-    normal_render(scene, "standard.png");
-    render_photons(scene, &photon_map, "photons.png");
-    final_render(scene, &photon_map, "final.png");
+    delete_photon_map(photon_map);
+
+    // normal_render(scene, "standard.png");
+    // render_photons(scene, &photon_map, "photons.png");
+    // final_render(scene, &photon_map, "final.png");
 
     // stop timing
     clock_t end = clock();
@@ -107,6 +119,7 @@ int main(int argc, char *argv[])
     double t = (double)(end-start)/CLOCKS_PER_SEC;
     printf("\nRendering Time: %fs.\n",t);
 
+    delete scene;
     // application successfully returned
     return 0;
 }
