@@ -1,3 +1,4 @@
+#include <imagePlane.h>
 #include <Light.h>
 #include <LightObject.h>
 #include <quad.h>

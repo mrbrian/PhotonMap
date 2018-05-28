@@ -1,4 +1,5 @@
-#include "camera.h"
+#include <camera.h>
+#include <imagePlane.h>
 
 Matrix4x4 *Camera::calc_proj_matrix()
 {
@@ -20,12 +21,12 @@ Matrix4x4 Camera::get_view_matrix()
     return m_view;
 }
 
-Plane *Camera::calc_img_plane()
+ImagePlane *Camera::calc_img_plane()
 {
     Vector3D fwd = Vector3D(0,1,0).cross(lookAt);
     double x1 = std::tan(fov / 2) * near;
     double y1 = std::tan(fov / 2) * near;
-    Plane *result = new Plane(
+    ImagePlane *result = new ImagePlane(
                 Point3D(x1, y1, near),
                 Point3D(x1, -y1, near),
                 Point3D(-x1, -y1, near),

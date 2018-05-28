@@ -10,6 +10,7 @@
 #include "kdtree/kdtree.h"
 #include "misc.h"
 
+class ImagePlane;
 class Light;
 
 using namespace std;
@@ -111,7 +112,7 @@ public:
     void Transform(Matrix4x4 m);
 
     Camera cam;
-    Plane *imgPlane;
+    ImagePlane *imgPlane;
     std::vector<SceneObject*> objects;
     std::vector<Light*> lights;
 };

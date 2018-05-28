@@ -8,6 +8,11 @@ LightObject::LightObject(Point3D pos, Color c, double in_watts, SceneObject *o)
 
 }
 
+LightObject::~LightObject()
+{
+    delete obj;
+}
+
 double LightObject::intersect(Point3D o, Vector3D v, Vector3D *n)
 {
     return obj->intersect(o, v, n);

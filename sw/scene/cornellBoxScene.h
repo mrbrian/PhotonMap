@@ -1,6 +1,7 @@
 #include <I_Scene.h>
 #include <vector>
 
+class LightObject;
 class Material;
 class photon;
 class Scene;
@@ -23,4 +24,5 @@ private:
 	Material *mat_light;
 	Material *mat_shiny;
 	Material *mat_floor;
+	LightObject *l_obj;
 };

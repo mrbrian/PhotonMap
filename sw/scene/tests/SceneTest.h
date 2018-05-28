@@ -1,10 +1,10 @@
 #include <gtest/gtest.h>
 #include <scene.h>
 
-class SceneTest : public ::testing::Test 
+class SceneTest : public ::testing::Test
 {
 protected:
-	virtual void SetUp() 
+	virtual void SetUp()
 	{
 		patient_ = new Scene();
 	}
@@ -12,7 +12,7 @@ protected:
 	// virtual void TearDown() {}
 
     Camera cam_;
-    Plane *imgPlane_;
+    ImagePlane *imgPlane_;
     std::vector<SceneObject*> objects_;
     std::vector<Light*> lights_;
 

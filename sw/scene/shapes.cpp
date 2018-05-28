@@ -122,7 +122,10 @@ char const *Cube::type()
     return "Cube";
 }
 
-Cube::~Cube() {
+Cube::~Cube()
+{
+    for (int i = 0; i < 6; i++)
+        delete faces[i];
     delete [] faces;
 }
 

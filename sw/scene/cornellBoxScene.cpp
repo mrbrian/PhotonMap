@@ -1,4 +1,5 @@
 #include <cornellBoxScene.h>
+#include <imagePlane.h>
 #include <LightObject.h>
 #include <material.h>
 #include <quad.h>
@@ -52,7 +53,7 @@ CornellBoxScene::CornellBoxScene(int width, int height)
         Point3D(0.653, 2.74, -7.224),
         mat_light);
 
-    LightObject *l_obj = new LightObject(Point3D(0, 2.65, -8), Color(1, 1, 1), 20, light_q);
+    l_obj = new LightObject(Point3D(0, 2.65, -8), Color(1, 1, 1), 20, light_q);
     scene->lights.push_back(l_obj);
 
     // Green wall on left
@@ -119,6 +120,13 @@ CornellBoxScene::CornellBoxScene(int width, int height)
 CornellBoxScene::~CornellBoxScene()
 {
     delete scene;
+    delete mat_ceil;
+    delete mat_grn;
+    delete mat_red;
+    delete mat_light;
+    delete mat_shiny;
+    delete mat_floor;
+    delete l_obj;
 }
 
 void CornellBoxScene::delete_objects()
