@@ -19,6 +19,20 @@ const double m_samples_per_pixel = 10;
 #define BG_COLOR    Color(1,0,0)
 #define NORM_EPSILON     0.001
 
+
+Scene::Scene()
+{
+}
+
+Scene::~Scene()
+{
+    for (std::vector<SceneObject* >::iterator it = objects.begin() ; it != objects.end(); ++it)
+    {
+        delete (*it);
+    }
+    objects.clear();
+}
+
 // ----------------------------------------------------------------------------
 // BuildOrthonormalSystem ()
 //

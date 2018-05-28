@@ -81,10 +81,8 @@ public:
         Transmission
     };
 
-    Camera cam;
-    Plane *imgPlane;
-    std::vector<SceneObject*> objects;
-    std::vector<Light*> lights;
+    Scene();
+    ~Scene();
 
     static Scene *planeScene(int width, int height);
     static Scene *cornellBoxScene(int width, int height);
@@ -111,6 +109,11 @@ public:
     Color radiance_estimate(KdTree<photon,L2Norm_2,GetDim,3,float> *kd, SurfacePoint end_pt);
 
     void Transform(Matrix4x4 m);
+
+    Camera cam;
+    Plane *imgPlane;
+    std::vector<SceneObject*> objects;
+    std::vector<Light*> lights;
 };
 
 void BuildOrthonormalSystem(const Vector3D& v1, Vector3D& v2, Vector3D& v3);
