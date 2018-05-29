@@ -1,46 +1,19 @@
-#ifndef SCENE
-#define SCENE
+#pragma once
 
-#include "shapes.h"
-#include "algebra.h"
-#include "photon.h"
+#include <algebra.h>
+#include <camera.h>
+#include <kdtree/kdtree.h>
+#include <l2Norm_2.h>
+#include <misc.h>
+#include <photon.h>
+#include <polyroots.h>
+#include <shapes.h>
 #include <vector>
-#include "polyroots.h"
-#include "camera.h"
-#include "kdtree/kdtree.h"
-#include "misc.h"
 
 class ImagePlane;
 class Light;
 
 using namespace std;
-
-//l2 norm squared
-
-struct L2Norm_2{
-   L2Norm_2(){}
-   float operator () (const photon &n1,const photon &n2)const{
-      return n1.dist2(n2);
-   }
-};
-
-struct GetDim{
-   GetDim(){}
-   float operator () (const photon &n1,unsigned dim)const{
-    switch (dim)
-    {
-    case 0:
-        return n1.x;
-    case 1:
-        return n1.y;
-    case 2:
-        return n1.z;
-    default:
-        printf("incorrect dim parameter\n");
-        throw -1;
-    }
-   }
-};
 
 struct SurfacePoint
 {
@@ -119,5 +92,3 @@ public:
 
 void BuildOrthonormalSystem(const Vector3D& v1, Vector3D& v2, Vector3D& v3);
 Vector3D HemisphereSampling(Vector3D m_normal);
-
-#endif //SCENE

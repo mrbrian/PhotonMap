@@ -429,6 +429,7 @@ void Scene::emit_photons(int num_photons, vector<photon*> *photon_map)
     {
         photon *obj = (*it);
         trace_photon(obj, 0, photon_map);
+        delete obj;
     }
 }
 

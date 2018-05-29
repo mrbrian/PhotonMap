@@ -129,16 +129,32 @@ CornellBoxScene::~CornellBoxScene()
     delete l_obj;
 }
 
-void CornellBoxScene::delete_objects()
-{
-    // for (std::vector<SceneObject* >::iterator it = scene->begin() ; it != scene->end(); ++it)
-    // {
-    //     delete (*it);
-    // }
-    // scene->clear();
-}
-
 void CornellBoxScene::emit_photons(int num_photons, std::vector<photon*> *photon_map)
 {
     scene->emit_photons(num_photons, photon_map);
+}
+
+int CornellBoxScene::imageWidth()
+{
+    return scene->cam.imgWidth;
+}
+
+int CornellBoxScene::imageHeight()
+{
+    return scene->cam.imgHeight;
+}
+
+Color* CornellBoxScene::Render()
+{
+    return scene->Render();
+}
+
+Color *CornellBoxScene::Render(std::vector<photon*> *photon_map)
+{
+    return scene->Render(photon_map);
+}
+
+Color *CornellBoxScene::Render(KdTree<photon,L2Norm_2,GetDim,3,float> *kd)
+{
+    return scene->Render(kd);
 }

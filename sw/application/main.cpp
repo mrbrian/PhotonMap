@@ -11,8 +11,8 @@
 #include <time.h>
 #include <vector>
 
-#define DEF_WIDTH   750
-#define DEF_HEIGHT  750
+#define DEF_WIDTH   10
+#define DEF_HEIGHT  10
 
 double clamp(double min, double max, double in)
 {
@@ -37,10 +37,10 @@ KdTree<photon,L2Norm_2,GetDim,3,float>* make_kdtree(vector<photon*> *photon_map)
     return kd;
 }
 
-void render_photons(Scene &scene, vector<photon*> *photon_map, const char* outputStr)
+void render_photons(I_Scene &scene, vector<photon*> *photon_map, const char* outputStr)
 {
-    int width = scene.cam.imgWidth;
-    int height = scene.cam.imgHeight;
+    int width = scene.imageWidth();
+    int height = scene.imageHeight();
 
     Color *resultImg = scene.Render(photon_map);
 
@@ -49,10 +49,10 @@ void render_photons(Scene &scene, vector<photon*> *photon_map, const char* outpu
 }
 
 
-void normal_render(Scene &scene, const char* outputStr)
+void normal_render(I_Scene &scene, const char* outputStr)
 {
-    int width = scene.cam.imgWidth;
-    int height = scene.cam.imgHeight;
+    int width = scene.imageWidth();
+    int height = scene.imageHeight();
 
     // create new image
     std::vector<unsigned char> image;
@@ -64,15 +64,16 @@ void normal_render(Scene &scene, const char* outputStr)
     delete [] resultImg;
 }
 
-void final_render(Scene &scene, vector<photon*> *photons, const char* outputStr)
+void final_render(I_Scene &scene, vector<photon*> *photons, const char* outputStr)
 {
-    int width = scene.cam.imgWidth;
-    int height = scene.cam.imgHeight;
+    int width = scene.imageWidth();
+    int height = scene.imageHeight();
     KdTree<photon,L2Norm_2,GetDim,3,float> *tree = make_kdtree(photons);
 
     Color *resultImg = scene.Render(tree);
 
     misc::save_color_image(outputStr, resultImg, width, height);
+    delete tree;
     delete [] resultImg;
 }
 
@@ -107,11 +108,11 @@ int main(int argc, char *argv[])
     vector<photon*> photon_map;
     scene->emit_photons(10, &photon_map);
 
-    delete_photon_map(photon_map);
 
-    // normal_render(scene, "standard.png");
-    // render_photons(scene, &photon_map, "photons.png");
-    // final_render(scene, &photon_map, "final.png");
+    normal_render(*scene, "standard.png");
+    render_photons(*scene, &photon_map, "photons.png");
+    final_render(*scene, &photon_map, "final.png");
+    delete_photon_map(photon_map);
 
     // stop timing
     clock_t end = clock();

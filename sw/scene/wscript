@@ -19,7 +19,7 @@ def build(bld):
         bld(features     = 'cxx',
                 source   = bld.path.ant_glob('*.cpp'),
                 target   = 'scene',
-                includes = ['.', '..'],
+                includes = ['.'],
                 cxxflags = ['-Wall', '-std=gnu++11', '-g'],
 		use=['lodepng'])
         bld.recurse('tests')
