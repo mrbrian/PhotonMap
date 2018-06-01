@@ -154,7 +154,7 @@ Color *CornellBoxScene::Render(std::vector<photon*> *photon_map)
     return scene->Render(photon_map);
 }
 
-Color *CornellBoxScene::Render(KdTree<photon,L2Norm_2,GetDim,3,float> *kd)
+Color *CornellBoxScene::Render(I_KdTree *kd)
 {
     return scene->Render(kd);
 }

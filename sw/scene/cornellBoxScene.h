@@ -2,6 +2,7 @@
 #include <vector>
 
 class Color;
+class I_KdTree;
 class LightObject;
 class Material;
 class photon;
@@ -15,7 +16,7 @@ public:
 
 	virtual Color* Render();
     virtual Color* Render(std::vector<photon*> *photon_map);
-    virtual Color *Render(KdTree<photon,L2Norm_2,GetDim,3,float> *kd);
+    virtual Color *Render(I_KdTree *kd);
 	virtual int imageWidth();
 	virtual int imageHeight();
 	virtual void emit_photons(int num_photons, std::vector<photon*> *photon_map);

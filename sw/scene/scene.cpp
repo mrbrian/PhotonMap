@@ -1,3 +1,4 @@
+#include <I_KdTree.h>
 #include <imagePlane.h>
 #include <Light.h>
 #include <LightObject.h>
@@ -534,14 +535,14 @@ Color Scene::BRDF(SurfacePoint &x, Vector3D& view, Vector3D& pd)
     return (diff + spec);
 }
 
-Color Scene::radiance_estimate(KdTree<photon,L2Norm_2,GetDim,3,float> *kd, SurfacePoint end_pt)
+Color Scene::radiance_estimate(I_KdTree *kd, SurfacePoint end_pt)
 {
     // how much light is at this point?
     // locate k nearest photons
     // how much light from each
 
-    const photon p = photon(end_pt.position, Vector3D(0,1,0), Color(0,0,0), 0);
-    vector<photon> nearest = kd->getKNearest(p, m_samples_per_pixel);
+    const photon p(end_pt.position, Vector3D(0,1,0), Color(0,0,0), 0);
+    std::vector<photon> nearest = kd->getKNearest(p, m_samples_per_pixel);
 
     int num_photons = nearest.size();
 
@@ -593,7 +594,7 @@ Color Scene::radiance_estimate(KdTree<photon,L2Norm_2,GetDim,3,float> *kd, Surfa
     return flux;
 }
 
-Color Scene::Render(KdTree<photon,L2Norm_2,GetDim,3,float> *kd, int x, int y)
+Color Scene::Render(I_KdTree *kd, int x, int y)
 {
     // iterate over the pixels & set colour values
     // determine ray vector
@@ -612,7 +613,7 @@ Color Scene::Render(KdTree<photon,L2Norm_2,GetDim,3,float> *kd, int x, int y)
     return c;
 }
 
-Color *Scene::Render(KdTree<photon,L2Norm_2,GetDim,3,float> *kd)
+Color *Scene::Render(I_KdTree *kd)
 {
     Color * result = new Color[cam.imgWidth * cam.imgHeight];
     // iterate over the pixels & set colour values
@@ -632,7 +633,7 @@ Color *Scene::Render(KdTree<photon,L2Norm_2,GetDim,3,float> *kd)
     return result;
 }
 
-bool Scene::trace_ray(KdTree<photon,L2Norm_2,GetDim,3,float> *kd, Ray ray, Color *color, int depth)
+bool Scene::trace_ray(I_KdTree *kd, Ray ray, Color *color, int depth)
 {
     debug("trace_ray depth %d\n", depth);
     if (depth > MAX_DEPTH)  // stop recursing

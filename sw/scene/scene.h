@@ -2,14 +2,13 @@
 
 #include <algebra.h>
 #include <camera.h>
-#include <kdtree/kdtree.h>
-#include <l2Norm_2.h>
 #include <misc.h>
 #include <photon.h>
 #include <polyroots.h>
 #include <shapes.h>
 #include <vector>
 
+class I_KdTree;
 class ImagePlane;
 class Light;
 
@@ -63,10 +62,10 @@ public:
 
     Color *Render();
     Color *Render(vector<photon*> *photon_map);
-    Color *Render(KdTree<photon,L2Norm_2,GetDim,3,float> *kd);
-    Color Render(KdTree<photon,L2Norm_2,GetDim,3,float> *kd, int x, int y);
+    Color *Render(I_KdTree *kd);
+    Color Render(I_KdTree *kd, int x, int y);
 
-    bool trace_ray(KdTree<photon,L2Norm_2,GetDim,3,float> *kd, Ray ray, Color *color, int depth);
+    bool trace_ray(I_KdTree *kd, Ray ray, Color *color, int depth);
     bool trace_ray(Point3D o, Vector3D v, Color *color, int depth);
     bool trace_ray_lights(Point3D o, Vector3D v, Color *color, int depth);
     bool trace_ray(Point3D o, Vector3D v, Color *color, Point3D *out_pos, Vector3D *out_norm, Color *out_clr, Material *out_mat, int depth);
@@ -80,7 +79,7 @@ public:
     void emit_photons(int num_photons, vector<photon*> *photon_map);
     void trace_photon(photon *in_pho, int depth, vector<photon*> *out_list);
     void bounce_photon(RayType ray_type, Point3D *i_pos, Vector3D *i_norm, Vector3D *i_reflect, Vector3D *i_refract, Color *i_clr, double energy, int depth, vector<photon*> *out_list);
-    Color radiance_estimate(KdTree<photon,L2Norm_2,GetDim,3,float> *kd, SurfacePoint end_pt);
+    Color radiance_estimate(I_KdTree *kd, SurfacePoint end_pt);
 
     void Transform(Matrix4x4 m);
 

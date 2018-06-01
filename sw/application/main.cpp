@@ -5,6 +5,7 @@
 #include "scene.h"
 #include <assert.h>
 #include <cornellBoxScene.h>
+#include <I_KdTree.h>
 #include <I_Scene.h>
 #include <iostream>
 #include <stdio.h>
@@ -23,7 +24,7 @@ double clamp(double min, double max, double in)
     return in;
 }
 
-KdTree<photon,L2Norm_2,GetDim,3,float>* make_kdtree(vector<photon*> *photon_map)
+I_KdTree* make_kdtree(vector<photon*> *photon_map)
 {
     vector<photon> photon_map2;
 
@@ -33,7 +34,7 @@ KdTree<photon,L2Norm_2,GetDim,3,float>* make_kdtree(vector<photon*> *photon_map)
         photon_map2.push_back(*obj);
     }
 
-    KdTree<photon,L2Norm_2,GetDim,3,float> *kd = new KdTree<photon,L2Norm_2,GetDim,3,float>(photon_map2);
+    I_KdTree *kd = new I_KdTree(photon_map2);
     return kd;
 }
 
@@ -68,7 +69,7 @@ void final_render(I_Scene &scene, vector<photon*> *photons, const char* outputSt
 {
     int width = scene.imageWidth();
     int height = scene.imageHeight();
-    KdTree<photon,L2Norm_2,GetDim,3,float> *tree = make_kdtree(photons);
+    I_KdTree *tree = make_kdtree(photons);
 
     Color *resultImg = scene.Render(tree);
 
