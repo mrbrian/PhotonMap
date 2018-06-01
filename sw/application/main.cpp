@@ -8,6 +8,7 @@
 #include <I_KdTree.h>
 #include <I_Scene.h>
 #include <iostream>
+#include <photonKdTree.h>
 #include <stdio.h>
 #include <time.h>
 #include <vector>
@@ -24,9 +25,9 @@ double clamp(double min, double max, double in)
     return in;
 }
 
-I_KdTree* make_kdtree(vector<photon*> *photon_map)
+I_KdTree* make_kdtree(std::vector<photon*> *photon_map)
 {
-    vector<photon> photon_map2;
+    std::vector<photon> photon_map2;
 
     for (std::vector<photon*>::iterator it = photon_map->begin(); it != photon_map->end(); ++it)
     {
@@ -34,7 +35,9 @@ I_KdTree* make_kdtree(vector<photon*> *photon_map)
         photon_map2.push_back(*obj);
     }
 
-    I_KdTree *kd = new I_KdTree(photon_map2);
+    I_KdTree *kd = new PhotonKdTree(
+        new KdTree<photon, L2Norm_2, GetDim,3,float>(
+            photon_map2));
     return kd;
 }
 

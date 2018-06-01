@@ -7,6 +7,6 @@ def build(bld):
         bld.program(
                 source       = bld.path.ant_glob('*.cpp'),
                 target       = 'app',
-                includes     = ['../scene'],
+                includes     = ['.', '../scene', '../scene/kdtree'],
                 cxxflags       = ['-Wall', '-std=gnu++11', '-g'],
                 use=['scene', 'lodepng'])
