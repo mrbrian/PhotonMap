@@ -22,4 +22,5 @@ def configure(cnf):
 
 def build(bld):
         bld.recurse('scene')
+        bld.recurse('lodepng')
         bld.recurse('application')

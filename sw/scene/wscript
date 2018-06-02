@@ -15,11 +15,9 @@ def configure(cnf):
                 uselib_store='GTEST PTHREAD')
 
 def build(bld):
-        bld.recurse('lodepng')
         bld(features     = 'cxx',
                 source   = bld.path.ant_glob('*.cpp'),
                 target   = 'scene',
                 includes = ['.'],
-                cxxflags = ['-Wall', '-std=gnu++11', '-g'],
-		use=['lodepng'])
+                cxxflags = ['-Wall', '-std=gnu++11', '-g'])
         bld.recurse('tests')

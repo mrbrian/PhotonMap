@@ -7,6 +7,7 @@
 #include <cornellBoxScene.h>
 #include <I_KdTree.h>
 #include <I_Scene.h>
+#include <lodepng.h>
 #include <iostream>
 #include <photonKdTree.h>
 #include <stdio.h>
@@ -23,6 +24,29 @@ double clamp(double min, double max, double in)
     if (in < min)
         return min;
     return in;
+}
+
+void save_color_image (const char *filename, Color *image, int width, int height)
+{
+    std::vector<unsigned char> img;
+    img.resize(width * height * 4);
+
+    for (int x = 0; x < width; x++)
+    {
+        for (int y = 0; y < height; y++)
+        {
+            int idx = x + y * width;
+            Color &c = image[idx];
+            // clamp rgb values [0,1]
+            img[4 * idx + 0] = clamp(0, 1, c.R()) * 255;
+            img[4 * idx + 1] = clamp(0, 1, c.G()) * 255;
+            img[4 * idx + 2] = clamp(0, 1, c.B()) * 255;
+            img[4 * idx + 3] = 255;
+        }
+    }
+
+    // save to file
+    lodepng::encode(filename, img, width, height);
 }
 
 I_KdTree* make_kdtree(std::vector<photon*> *photon_map)
@@ -48,7 +72,7 @@ void render_photons(I_Scene &scene, vector<photon*> *photon_map, const char* out
 
     Color *resultImg = scene.Render(photon_map);
 
-    misc::save_color_image(outputStr, resultImg, width, height);
+    save_color_image(outputStr, resultImg, width, height);
     delete [] resultImg;
 }
 
@@ -64,7 +88,7 @@ void normal_render(I_Scene &scene, const char* outputStr)
 
     Color *resultImg = scene.Render();
 
-    misc::save_color_image(outputStr, resultImg, width, height);
+    save_color_image(outputStr, resultImg, width, height);
     delete [] resultImg;
 }
 
@@ -76,7 +100,7 @@ void final_render(I_Scene &scene, vector<photon*> *photons, const char* outputSt
 
     Color *resultImg = scene.Render(tree);
 
-    misc::save_color_image(outputStr, resultImg, width, height);
+    save_color_image(outputStr, resultImg, width, height);
     delete tree;
     delete [] resultImg;
 }
