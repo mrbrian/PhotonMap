@@ -1,4 +1,5 @@
 import os
+import sys
 
 top = '.'
 out = 'build_directory'
@@ -8,17 +9,21 @@ def options(opt):
 
 def configure(cnf):
         cnf.load('compiler_cxx')
-        cnf.check(features='cxx cxxprogram',
-                lib=['pthread', 'gtest'],
-                cxxflags=['-Wall','-std=gnu++11','-g'],
-                uselib_store='PTHREAD')
+#        cnf.check(features='cxx cxxprogram',
+#                lib=['pthread', 'gtest'],
+#                cxxflags=['-Wall','-std=gnu++11','-g'],
+#                uselib_store='PTHREAD')
         cnf.check(features='cxx cxxprogram',
                 cxxflags=['-Wall','-std=gnu++11','-g'])
-                # defines=['var=foo'],
         # cnf.env.append_value('INCLUDES', ['/usr/local/include'])
         cnf.env.LIB_GTEST = ['gtest']
         cnf.env.LIBPATH_GTEST = [os.path.join(os.getcwd(), '/usr/local/lib')]
         cnf.env.INCLUDES_GTEST = [os.path.join(os.getcwd(), 'usr/local/include')]
+
+        if sys.platform == 'win32':
+            cnf.env.LIBPATH_GTEST   = ['D:\dev\googletest\googletest\Release']
+            cnf.env.INCLUDES_GTEST  = ['D:\dev\googletest\googletest\include']
+        print (cnf.env.LIB_GTEST)
 
 def build(bld):
         bld.recurse('scene')

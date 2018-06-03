@@ -1,3 +1,7 @@
 build_directory
 *.o
 sw/x64
+build
+/sw/.lock-waf_win32_build
+*.un~
+/waf3-2.0.8-206f2b7a89029e71942a2beb9e1bbbbd/waflib

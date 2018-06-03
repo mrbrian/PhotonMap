@@ -1,0 +1,1 @@
+python %WORKSPACE_BASE%\waf %1
