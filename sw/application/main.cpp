@@ -14,9 +14,6 @@
 #include <time.h>
 #include <vector>
 
-#define DEF_WIDTH   10
-#define DEF_HEIGHT  10
-
 double clamp(double min, double max, double in)
 {
     if (in > max)
@@ -47,22 +44,6 @@ void save_color_image (const char *filename, Color *image, int width, int height
 
     // save to file
     lodepng::encode(filename, img, width, height);
-}
-
-I_KdTree* make_kdtree(std::vector<photon*> *photon_map)
-{
-    std::vector<photon> photon_map2;
-
-    for (std::vector<photon*>::iterator it = photon_map->begin(); it != photon_map->end(); ++it)
-    {
-        photon *obj = *it;
-        photon_map2.push_back(*obj);
-    }
-
-    I_KdTree *kd = new PhotonKdTree(
-        new KdTree<photon, L2Norm_2, GetDim,3,float>(
-            photon_map2));
-    return kd;
 }
 
 void render_photons(I_Scene &scene, vector<photon*> *photon_map, const char* outputStr)
@@ -96,7 +77,7 @@ void final_render(I_Scene &scene, vector<photon*> *photons, const char* outputSt
 {
     int width = scene.imageWidth();
     int height = scene.imageHeight();
-    I_KdTree *tree = make_kdtree(photons);
+    I_KdTree *tree = new PhotonKdTree(photons);
 
     Color *resultImg = scene.Render(tree);
 
@@ -119,22 +100,18 @@ int main(int argc, char *argv[])
     I_Scene *scene;
 
     // image width and height
-    int width  = DEF_WIDTH;
-    int height = DEF_HEIGHT;
+    int width  = atoi(argv[1]);
+    int height = atoi(argv[2]);
+    int samples = atoi(argv[3]);
+    int num_photons = atoi(argv[4]);
 
-    if (argc >= 3)                  // prompt user on command line for dimensions
-    {
-        width  = atoi(argv[1]);
-        height = atoi(argv[2]);
-    }
-
-    scene = new CornellBoxScene(width, height);
+    scene = new CornellBoxScene(width, height, samples);
 
     // start timing...
     clock_t start = clock();
 
     vector<photon*> photon_map;
-    scene->emit_photons(10, &photon_map);
+    scene->emit_photons(num_photons, &photon_map);
 
 
     normal_render(*scene, "standard.png");

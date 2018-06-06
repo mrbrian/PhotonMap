@@ -9,7 +9,7 @@
 class PhotonKdTree : public I_KdTree
 {
 public:
-	PhotonKdTree(KdTree<photon,L2Norm_2,GetDim,3,float> *kd);
+	PhotonKdTree(std::vector<photon*> *photon_map);
 	~PhotonKdTree();
 
 	virtual std::vector<photon> getKNearest(const photon &p, unsigned int m_samples_per_pixel);

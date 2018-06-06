@@ -9,4 +9,4 @@ def build(bld):
                 target       = 'app',
                 includes     = ['.', '../scene', '../scene/kdtree', '../lodepng'],
                 cxxflags       = ['-Wall', '-std=gnu++11', '-g'],
-                use=['scene', 'lodepng'])
+                use=['scene', 'lodepng', 'gtest'])
