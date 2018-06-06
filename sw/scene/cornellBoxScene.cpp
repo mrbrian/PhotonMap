@@ -3,30 +3,26 @@
 #include <LightObject.h>
 #include <material.h>
 #include <quad.h>
+#include <SceneFacade.h>
 #include <scene.h>
 #include <shapes.h>
 
 CornellBoxScene::CornellBoxScene(int width, int height, int num_samples)
-    : scene(new Scene(num_samples))
 {
-    Camera cam = Camera();
+    Camera *cam = new Camera();
 
-    cam.imgWidth = width;
-    cam.imgHeight = height;
     //cam.lookAt = Point3D(0, 0, -1);
-    cam.position = Point3D(0, 0, 0);
-    cam.fov = 53.1301024 / 180 * M_PI;
-    cam.near = 1;
-    cam.far = 10;
-    cam.aspect = 1;//(float)width / height;
-
-    scene->cam = cam;
+    cam->imgWidth = width;
+    cam->imgHeight = height;
+    cam->position = Point3D(0, 0, 0);
+    cam->fov = 53.1301024 / 180 * M_PI;
+    cam->near = 1;
+    cam->far = 10;
+    cam->aspect = 1;//(float)width / height;
+    cam->m_view = Matrix4x4::translation(Vector3D(0, 0,0));
+    cam->m_view = Matrix4x4::rotation(M_PI, 'y');
     // float img_plane_w = 0.5f;
-    cam.m_view = Matrix4x4::translation(Vector3D(0, 0,0));
-    cam.m_view = Matrix4x4::rotation(M_PI, 'y');
     //cam.m_view = Matrix4x4::rotation(0.025f, 'x') * cam.m_view;
-
-    scene->imgPlane = cam.calc_img_plane();
 
     mat_ceil  = new Material(Color(0, 0, 0), Color(1, 1, 1), Color(0, 0, 0), 1, Color(0, 0, 0));
     mat_grn   = new Material(Color(0, 0, 0), Color(0, 0.5f, 0), Color(0, 0, 0), 10, Color(0, 0, 0));
@@ -35,6 +31,8 @@ CornellBoxScene::CornellBoxScene(int width, int height, int num_samples)
     mat_shiny = new Material(Color(0, 0, 0), Color(0,0,0), Color(1, 1, 1), 10, Color(1,1,1));
     mat_floor = new Material(Color(0, 0, 0), Color(0.6f, 0.6f, 0.6f), Color(0, 0, 0), 10, Color(0, 0, 0));
 
+	std::vector<Light*> *lights = new std::vector<Light*>();
+	std::vector<SceneObject*> *objects = new std::vector<SceneObject*>();
     // Ceiling
     Quad *q_1 = new Quad(
         Point3D(2.75, 2.75, -10.5),
@@ -43,7 +41,7 @@ CornellBoxScene::CornellBoxScene(int width, int height, int num_samples)
         Point3D(-2.75, 2.75, -10.5),
         mat_ceil);
 
-    scene->objects.push_back(q_1);
+    objects->push_back(q_1);
 
     // Ceiling light
     Quad *light_q = new Quad(
@@ -54,7 +52,7 @@ CornellBoxScene::CornellBoxScene(int width, int height, int num_samples)
         mat_light);
 
     l_obj = new LightObject(Point3D(0, 2.65, -8), Color(1, 1, 1), 20, light_q);
-    scene->lights.push_back(l_obj);
+    lights->push_back(l_obj);
 
     // Green wall on left
     Quad *q_2 = new Quad(
@@ -63,7 +61,7 @@ CornellBoxScene::CornellBoxScene(int width, int height, int num_samples)
         Point3D(-2.75, -2.75, -5),
         Point3D(-2.75, -2.75, -10.5),
         mat_grn);
-    scene->objects.push_back(q_2);
+    objects->push_back(q_2);
 
     //   // Red wall on right
     Quad *q_3 = new Quad(
@@ -72,7 +70,7 @@ CornellBoxScene::CornellBoxScene(int width, int height, int num_samples)
         Point3D(2.75, -2.75, -5),
         Point3D(2.75, 2.75, -5),
         mat_red);
-    scene->objects.push_back(q_3);
+    objects->push_back(q_3);
 
     //   // Floor
     Quad *q_4 = new Quad(
@@ -81,7 +79,7 @@ CornellBoxScene::CornellBoxScene(int width, int height, int num_samples)
         Point3D(-2.75, -2.75, -5),
         Point3D(2.75, -2.75, 5),
         mat_floor);
-    scene->objects.push_back(q_4);
+    objects->push_back(q_4);
 
     // Back wall
     Quad *q_5 = new Quad(
@@ -90,7 +88,7 @@ CornellBoxScene::CornellBoxScene(int width, int height, int num_samples)
         Point3D(-2.75, -2.75, -10.5),
         Point3D(2.75, -2.75, -10.5),
         mat_floor);
-    scene->objects.push_back(q_5);
+    objects->push_back(q_5);
 
     Cube *big_cube = new Cube(
         Point3D(0, 0, 0),
@@ -102,7 +100,7 @@ CornellBoxScene::CornellBoxScene(int width, int height, int num_samples)
         Matrix4x4::rotation(misc::degToRad(-18.809), 'y') *
         Matrix4x4::scaling(Vector3D(1.659, 3.31, 1.659))
     );
-    scene->objects.push_back(big_cube);
+    objects->push_back(big_cube);
 
     Cube *sml_cube = new Cube(
         Point3D(0,0,0),
@@ -114,7 +112,14 @@ CornellBoxScene::CornellBoxScene(int width, int height, int num_samples)
         Matrix4x4::rotation(misc::degToRad(16.303), 'y') *
         Matrix4x4::scaling(Vector3D(1.655, 1.655, 1.655))
     );
-    scene->objects.push_back(sml_cube);
+    objects->push_back(sml_cube);
+
+	scene = new SceneFacade(
+		new Scene(
+		cam,
+		cam->calc_img_plane(),
+		lights, 
+		objects));
 }
 
 CornellBoxScene::~CornellBoxScene()
@@ -136,12 +141,12 @@ void CornellBoxScene::emit_photons(int num_photons, std::vector<photon*> *photon
 
 int CornellBoxScene::imageWidth()
 {
-    return scene->cam.imgWidth;
+    return scene->cam()->imgWidth;
 }
 
 int CornellBoxScene::imageHeight()
 {
-    return scene->cam.imgHeight;
+    return scene->cam()->imgHeight;
 }
 
 Color* CornellBoxScene::Render()
@@ -157,4 +162,29 @@ Color *CornellBoxScene::Render(std::vector<photon*> *photon_map)
 Color *CornellBoxScene::Render(I_KdTree *kd)
 {
     return scene->Render(kd);
+}
+
+Camera *CornellBoxScene::cam()
+{
+	return scene->cam();
+}
+
+ImagePlane *CornellBoxScene::imgPlane()
+{
+	return scene->imgPlane();
+}
+
+std::vector<SceneObject*> *CornellBoxScene::objects()
+{
+	return scene->objects();
+}
+
+std::vector<Light*> *CornellBoxScene::lights()
+{
+	return scene->lights();
+}
+
+void CornellBoxScene::Transform(Matrix4x4 m)
+{
+	scene->Transform(m);
 }

@@ -8,6 +8,7 @@
 #include <I_KdTree.h>
 #include <I_Scene.h>
 #include <lodepng.h>
+#include <I_SceneRenderer.h>
 #include <iostream>
 #include <photonKdTree.h>
 #include <stdio.h>
@@ -46,7 +47,7 @@ void save_color_image (const char *filename, Color *image, int width, int height
     lodepng::encode(filename, img, width, height);
 }
 
-void render_photons(I_Scene &scene, vector<photon*> *photon_map, const char* outputStr)
+void render_photons(I_SceneRenderer &scene, vector<photon*> *photon_map, const char* outputStr)
 {
     int width = scene.imageWidth();
     int height = scene.imageHeight();
@@ -58,7 +59,7 @@ void render_photons(I_Scene &scene, vector<photon*> *photon_map, const char* out
 }
 
 
-void normal_render(I_Scene &scene, const char* outputStr)
+void normal_render(I_SceneRenderer &scene, const char* outputStr)
 {
     int width = scene.imageWidth();
     int height = scene.imageHeight();
@@ -73,7 +74,7 @@ void normal_render(I_Scene &scene, const char* outputStr)
     delete [] resultImg;
 }
 
-void final_render(I_Scene &scene, vector<photon*> *photons, const char* outputStr)
+void final_render(I_SceneRenderer &scene, vector<photon*> *photons, const char* outputStr)
 {
     int width = scene.imageWidth();
     int height = scene.imageHeight();
@@ -97,7 +98,7 @@ void delete_photon_map(vector<photon*> &map)
 
 int main(int argc, char *argv[])
 {
-    I_Scene *scene;
+	I_SceneRenderer *scene;
 
     // image width and height
     int width  = atoi(argv[1]);
@@ -112,7 +113,6 @@ int main(int argc, char *argv[])
 
     vector<photon*> photon_map;
     scene->emit_photons(num_photons, &photon_map);
-
 
     normal_render(*scene, "standard.png");
     render_photons(*scene, &photon_map, "photons.png");

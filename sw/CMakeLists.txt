@@ -10,7 +10,7 @@ target_include_directories(lodepng_library
         ${PROJECT_SOURCE_DIR}/lodepng
 )
 
-file(GLOB SOURCES "scene/*.cpp")
+file(GLOB SOURCES "scene/*.cpp"  "scene/*.h")
 add_library(scene_library STATIC ${SOURCES})
 target_include_directories(scene_library
     PUBLIC 
