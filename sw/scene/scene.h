@@ -5,6 +5,8 @@
 #include <I_Scene.h>
 #include <polyroots.h>
 #include <shapes.h>
+#include <Ray.h>
+#include <SurfacePoint.h>
 #include <vector>
 
 class ImagePlane;
@@ -22,6 +24,7 @@ public:
 		std::vector<Light*> *lights, 
 		std::vector<SceneObject*> *objects);
 	Scene(int num_samples);
+
     ~Scene();
 
     //static Scene *planeScene(int width, int height, int num_samples);

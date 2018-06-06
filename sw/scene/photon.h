@@ -13,7 +13,9 @@ struct photon {
     double power;
     unsigned char phi, theta;   // compressed incident direction
 
-    photon(){}
+    photon(){
+        x = y = z = 0;
+    }
 
     photon(Point3D p, Vector3D d, Color c, double energy){
         set_position(p);

@@ -1,10 +1,10 @@
 #include <gtest/gtest.h>
 #include <photon.h>
 
-class PhotonTest : public ::testing::Test 
+class PhotonTest : public ::testing::Test
 {
 protected:
-	virtual void SetUp() 
+	virtual void SetUp()
 	{
 		patient_ = new photon();
 	}

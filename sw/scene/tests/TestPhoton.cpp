@@ -3,7 +3,7 @@
 #include <PhotonTest.h>
 #include <stdio.h>
 
-TEST_F(PhotonTest, IsDist2Correct) 
+TEST_F(PhotonTest, IsDist2Correct)
 {
 	photon other;
 	other.set_position(patient_->get_position());
