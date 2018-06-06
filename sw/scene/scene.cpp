@@ -8,8 +8,6 @@
 //#define DEBUG 1
 //#define debugging_enabled 1
 
-const double m_samples_per_pixel = 10;
-
 #ifdef DEBUG
 #define debug(fmt, ...)  do { \
   if (debugging_enabled) { printf(fmt, ##__VA_ARGS__); } \
@@ -23,7 +21,8 @@ const double m_samples_per_pixel = 10;
 #define NORM_EPSILON     0.001
 
 
-Scene::Scene()
+Scene::Scene(int num_samples)
+    : m_samples_per_pixel(num_samples)
 {
 }
 
@@ -753,9 +752,9 @@ void Scene::Transform(Matrix4x4 m)
 }
 
 // cornell scene
-Scene *Scene::planeScene(int width, int height)
+Scene *Scene::planeScene(int width, int height, int num_samples)
 {
-    Scene *s = new Scene();
+    Scene *s = new Scene(num_samples);
     Scene &scene = *s;
     Camera cam = Camera();
 

@@ -54,11 +54,11 @@ public:
         Transmission
     };
 
-    Scene();
+    Scene(int num_samples);
     ~Scene();
 
-    static Scene *planeScene(int width, int height);
-    static Scene *cornellBoxScene(int width, int height);
+    static Scene *planeScene(int width, int height, int num_samples);
+    static Scene *cornellBoxScene(int width, int height, int num_samples);
 
     Color *Render();
     Color *Render(vector<photon*> *photon_map);
@@ -87,6 +87,9 @@ public:
     ImagePlane *imgPlane;
     std::vector<SceneObject*> objects;
     std::vector<Light*> lights;
+
+private:
+	int m_samples_per_pixel;
 };
 
 void BuildOrthonormalSystem(const Vector3D& v1, Vector3D& v2, Vector3D& v3);

@@ -11,7 +11,7 @@ class Scene;
 class CornellBoxScene : public I_Scene
 {
 public:
-	CornellBoxScene(int w, int h);
+	CornellBoxScene(int w, int h, int num_samples);
 	~CornellBoxScene();
 
 	virtual Color* Render();

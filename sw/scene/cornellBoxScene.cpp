@@ -6,8 +6,8 @@
 #include <scene.h>
 #include <shapes.h>
 
-CornellBoxScene::CornellBoxScene(int width, int height)
-    : scene(new Scene())
+CornellBoxScene::CornellBoxScene(int width, int height, int num_samples)
+    : scene(new Scene(num_samples))
 {
     Camera cam = Camera();
 

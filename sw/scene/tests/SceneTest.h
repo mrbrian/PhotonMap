@@ -6,7 +6,7 @@ class SceneTest : public ::testing::Test
 protected:
 	virtual void SetUp()
 	{
-		patient_ = new Scene();
+		patient_ = new Scene(10);
 	}
 
 	// virtual void TearDown() {}
