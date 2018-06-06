@@ -115,11 +115,12 @@ CornellBoxScene::CornellBoxScene(int width, int height, int num_samples)
     objects->push_back(sml_cube);
 
 	scene = new SceneFacade(
-		new Scene(
-		cam,
-		cam->calc_img_plane(),
-		lights, 
-		objects));
+        new Scene(
+        cam,
+        cam->calc_img_plane(),
+        lights,
+        objects),
+        num_samples);
 }
 
 CornellBoxScene::~CornellBoxScene()

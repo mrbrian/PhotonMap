@@ -41,6 +41,80 @@ SceneFacade::~SceneFacade()
     delete imgPlane_;
 }
 
+// ----------------------------------------------------------------------------
+// BuildOrthonormalSystem ()
+//
+// Generating outgoing ray directions by uniform sampling on a hemisphere
+//
+// Input: vectors v1 and v2
+// Output: vector v3 so (v1, v2, v3) form an orthonormal system
+//         (assuming v1 is already normalized)
+//
+// ----------------------------------------------------------------------------
+void BuildOrthonormalSystem(const Vector3D& v1, Vector3D& v2, Vector3D& v3)
+{
+    float inverse_length, den;
+
+    if (std::abs(v1[0]) > std::abs(v1[1]))
+    {
+        // project to the plane y = 0
+        // construct a normalized orthogonal vector on this plane
+        den = sqrtf(v1[0] * v1[0] + v1[2] * v1[2]);
+        inverse_length = 1.f / den;
+        v2 = Vector3D(-v1[2] * inverse_length, 0.0f, v1[0] * inverse_length);
+    }
+    else
+    {
+        // project to the plane x = 0
+        // construct a normalized orthogonal vector on this plane
+        den = sqrtf(v1[1] * v1[1] + v1[2] * v1[2]);
+        inverse_length = 1.0f / den;
+        v2 = Vector3D(0.0f, v1[2] * inverse_length, -v1[1] * inverse_length);
+    }
+
+    // construct v3 as the cross-product between v1 and v2
+    v3 = v1.cross(v2);
+}
+
+// ----------------------------------------------------------------------------
+// HemisphereSampling ()
+//
+// Generating outgoing ray directions by uniform sampling on a hemisphere
+//
+// Input: normal vector at the intersection point
+// Output: outgoing ray direction from uniform sampling on a hemisphere
+//
+// ----------------------------------------------------------------------------
+
+Vector3D HemisphereSampling(Vector3D m_normal)
+{
+    float r_1 = misc::RAND_2();
+    float r_2 = misc::RAND_2();
+
+    float r = sqrt(1 - r_1 * r_1);
+    float phi = 2 * M_PI * r_2;
+
+    double vx = cos(phi) * r;
+    double vy = sin(phi) * r;
+    double vz = r_1;
+
+    Vector3D sampled_ray_direction = Vector3D(vx, vy, vz);
+
+    // Now we build an otrhotnormal frame system
+    // to "rotate" the sampled ray to this system
+    Vector3D v2, v3;
+    BuildOrthonormalSystem (m_normal, v2, v3);
+
+    // Construct the normalized rotated vector
+    double vecx = Vector3D(v2[0], v3[0], m_normal[0]).dot(sampled_ray_direction);
+    double vecy = Vector3D(v2[1], v3[1], m_normal[1]).dot(sampled_ray_direction);
+    double vecz = Vector3D(v2[2], v3[2], m_normal[2]).dot(sampled_ray_direction);
+    Vector3D m_rotated_ray_direction = Vector3D(vecx,vecy,vecz);
+
+    m_rotated_ray_direction.normalize();
+    return m_rotated_ray_direction;
+}
+
 Color *SceneFacade::Render()
 {
     Color * result = new Color[cam()->imgWidth * cam()->imgHeight];

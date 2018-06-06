@@ -73,3 +73,7 @@ private:
 	std::vector<Light*> *lights_;
 	Scene *scene_;
 };
+
+void BuildOrthonormalSystem(const Vector3D& v1, Vector3D& v2, Vector3D& v3);
+Vector3D HemisphereSampling(Vector3D m_normal);
+
