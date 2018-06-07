@@ -3,7 +3,6 @@
 #include <I_Scene.h>
 #include <vector>
 #include <camera.h>
-#include <I_SceneRenderer.h>
 
 class Color;
 class I_KdTree;
@@ -12,21 +11,12 @@ class SceneObject;
 class Light;
 class Material;
 class photon;
-class SceneFacade;
 
-class CornellBoxScene : public I_Scene, public I_SceneRenderer
+class CornellBoxScene : public I_Scene
 {
 public:
-	CornellBoxScene(int w, int h, int num_samples);
+	CornellBoxScene(int w, int h);
 	~CornellBoxScene();
-
-	virtual Color* Render();
-    virtual Color* Render(std::vector<photon*> *photon_map);
-    virtual Color *Render(I_KdTree *kd);
-	virtual int imageWidth();
-	virtual int imageHeight();
-	virtual void emit_photons(int num_photons, std::vector<photon*> *photon_map);
-
 	void Transform(Matrix4x4 m);
 
 	Camera *cam();
@@ -35,7 +25,7 @@ public:
 	std::vector<Light*> *lights();
 
 private:
-    SceneFacade *scene;
+    I_Scene *scene;
 
 	Material *mat_ceil;
 	Material *mat_grn;

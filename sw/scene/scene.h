@@ -19,9 +19,9 @@ class Scene : public I_Scene
 {
 public:
 	Scene(
-		Camera *cam, 
+		Camera *cam,
 		ImagePlane *imgPlane,
-		std::vector<Light*> *lights, 
+		std::vector<Light*> *lights,
 		std::vector<SceneObject*> *objects);
 	Scene(int num_samples);
 

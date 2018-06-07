@@ -3,11 +3,10 @@
 #include <LightObject.h>
 #include <material.h>
 #include <quad.h>
-#include <SceneFacade.h>
 #include <scene.h>
 #include <shapes.h>
 
-CornellBoxScene::CornellBoxScene(int width, int height, int num_samples)
+CornellBoxScene::CornellBoxScene(int width, int height)
 {
     Camera *cam = new Camera();
 
@@ -114,13 +113,11 @@ CornellBoxScene::CornellBoxScene(int width, int height, int num_samples)
     );
     objects->push_back(sml_cube);
 
-	scene = new SceneFacade(
-        new Scene(
+    scene = new Scene(
         cam,
         cam->calc_img_plane(),
         lights,
-        objects),
-        num_samples);
+        objects);
 }
 
 CornellBoxScene::~CornellBoxScene()
@@ -133,36 +130,6 @@ CornellBoxScene::~CornellBoxScene()
     delete mat_shiny;
     delete mat_floor;
     delete l_obj;
-}
-
-void CornellBoxScene::emit_photons(int num_photons, std::vector<photon*> *photon_map)
-{
-    scene->emit_photons(num_photons, photon_map);
-}
-
-int CornellBoxScene::imageWidth()
-{
-    return scene->cam()->imgWidth;
-}
-
-int CornellBoxScene::imageHeight()
-{
-    return scene->cam()->imgHeight;
-}
-
-Color* CornellBoxScene::Render()
-{
-    return scene->Render();
-}
-
-Color *CornellBoxScene::Render(std::vector<photon*> *photon_map)
-{
-    return scene->Render(photon_map);
-}
-
-Color *CornellBoxScene::Render(I_KdTree *kd)
-{
-    return scene->Render(kd);
 }
 
 Camera *CornellBoxScene::cam()
