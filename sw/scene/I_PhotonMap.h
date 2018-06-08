@@ -1,3 +1,5 @@
+#pragma once 
+
 class photon;
 
 class I_PhotonMap

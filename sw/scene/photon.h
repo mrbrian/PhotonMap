@@ -27,9 +27,9 @@ public:
     void set_position(Point3D power);
     void set_direction(Vector3D dir);
     void set_color(Color dir);
-    Color *get_color();
-    Point3D get_position();
-    Vector3D get_direction();
+    Color get_color() const;
+    Point3D get_position() const;
+    Vector3D get_direction() const;
 
     float dist2(const photon &n)const{
        float _x = n.x - x;

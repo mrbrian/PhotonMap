@@ -1,4 +1,5 @@
 #include <photonKdTree.h>
+#include <I_PhotonMap.h>
 
 PhotonKdTree::PhotonKdTree(std::vector<photon*> *photon_map)
 {
@@ -12,6 +13,19 @@ PhotonKdTree::PhotonKdTree(std::vector<photon*> *photon_map)
 
 	kdTree_ = new KdTree<photon, L2Norm_2, GetDim,3,float>(
             photon_map2);
+}
+
+PhotonKdTree::PhotonKdTree(I_PhotonMap &photon_map)
+{
+	std::vector<photon> photon_map2;
+
+	for (int i = 0; i < photon_map.count(); i++)
+	{
+		photon_map2.push_back(photon_map.getPhoton(i));
+	}
+
+	kdTree_ = new KdTree<photon, L2Norm_2, GetDim, 3, float>(
+		photon_map2);
 }
 
 PhotonKdTree::~PhotonKdTree()

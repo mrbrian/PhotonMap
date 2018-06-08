@@ -28,17 +28,17 @@ void photon::set_color(Color clr)
     color = clr;
 }
 
-Color *photon::get_color()
+Color photon::get_color() const
 {
-    return &color;
+    return Color(color);
 }
 
-Point3D photon::get_position()
+Point3D photon::get_position() const
 {
     return Point3D(x, y, z);
 }
 
-Vector3D photon::get_direction()
+Vector3D photon::get_direction() const
 {
     double ph = ((float)phi * 2 * M_PI) / 255.0 - M_PI;
     double th = (float)theta / 255.0 * M_PI;

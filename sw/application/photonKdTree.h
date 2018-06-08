@@ -6,10 +6,13 @@
 #include <photon.h>
 #include <vector>
 
+class I_PhotonMap;
+
 class PhotonKdTree : public I_KdTree
 {
 public:
 	PhotonKdTree(std::vector<photon*> *photon_map);
+	PhotonKdTree(I_PhotonMap &photon_map);
 	~PhotonKdTree();
 
 	virtual std::vector<photon> getKNearest(const photon &p, unsigned int m_samples_per_pixel);

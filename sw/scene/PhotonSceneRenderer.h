@@ -7,6 +7,7 @@
 class Camera;
 class Color;
 class I_KdTree;
+class I_PhotonMap;
 class photon;
 class I_Scene;
 
@@ -27,6 +28,6 @@ private:
 	I_Scene &scene_;
 	int imageWidth_;
 	int imageHeight_;
-	std::vector<photon*> *photon_map;
 	int num_photons_;
+	I_PhotonMap *photonMap_;
 };

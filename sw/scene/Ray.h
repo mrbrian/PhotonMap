@@ -2,6 +2,13 @@
 
 #include <algebra.h>
 
+enum RayType
+{
+	Diffuse,
+	Specular,
+	Transmission
+};
+
 struct Ray
 {
 public:

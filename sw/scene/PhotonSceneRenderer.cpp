@@ -1,16 +1,17 @@
 #include <I_Scene.h>
 #include <photon.h>
+#include <PhotonMap.h>
 #include <PhotonSceneRenderer.h>
 
 PhotonSceneRenderer::PhotonSceneRenderer(I_Scene &scene, int num_photons)
 	: scene_(scene)
     , num_photons_(num_photons)
+	, photonMap_(new PhotonMap(scene, num_photons))
 {
 }
 
 PhotonSceneRenderer::~PhotonSceneRenderer()
 {
-
 }
 
 Color *PhotonSceneRenderer::Render()
@@ -26,9 +27,9 @@ Color *PhotonSceneRenderer::Render()
         }
     }
 
-    for(std::vector<photon*>::iterator it = photon_map->begin(); it != photon_map->end(); ++it)
+    for(int i = 0; i < photonMap_->count(); i++)
     {
-        photon *p = (*it);
+        const photon *p = &photonMap_->getPhoton(i);
 
         // calc image space coordinates
         Point2D img_coords = calc_image_coords(p->get_position());
@@ -38,7 +39,7 @@ Color *PhotonSceneRenderer::Render()
         if (idx < 0 || idx >= cam()->imgHeight * cam()->imgWidth)
             continue;
         Color &pixel = result[x + y * cam()->imgWidth];
-        pixel = pixel + *(p->get_color());
+        pixel = pixel + p->get_color();
     }
 
     return result;

@@ -9,6 +9,7 @@
 class Camera;
 class Color;
 class I_KdTree;
+class I_PhotonMap;
 class I_Scene;
 class ImagePlane;
 class Light;
@@ -41,8 +42,8 @@ private:
 	I_Scene &scene_;
 	int imageWidth_;
 	int imageHeight_;
-	I_KdTree *kd;
-
+	I_KdTree *kd_;
+	I_PhotonMap *photonMap_;
     int MAX_DEPTH;
     Color BG_COLOR;
     double NORM_EPSILON;
