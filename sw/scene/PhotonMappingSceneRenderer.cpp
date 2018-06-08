@@ -10,9 +10,16 @@
 #include <I_KdTree.h>
 #include <I_PhotonMap.h>
 
-PhotonMappingSceneRenderer::PhotonMappingSceneRenderer(I_Scene &scene, int num_samples, int num_photons)
+PhotonMappingSceneRenderer::PhotonMappingSceneRenderer(
+	I_Scene &scene, 
+	I_KdTree &kd, 
+	int num_samples,
+	int width, 
+	int height)
 	: scene_(scene)
-	, photonMap_(new PhotonMap(scene, num_samples))
+	, kd_(kd)
+	, imageWidth_(width)
+	, imageHeight_(height)
 {
     MAX_DEPTH = 5;
     BG_COLOR = Color(1,0,0);
@@ -27,7 +34,7 @@ PhotonMappingSceneRenderer::~PhotonMappingSceneRenderer()
 
 Color *PhotonMappingSceneRenderer::Render()
 {
-	return Render(kd_);
+	return Render(&kd_);
 }
 
 Color PhotonMappingSceneRenderer::radiance_estimate(I_KdTree *kd, SurfacePoint end_pt)

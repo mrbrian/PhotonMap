@@ -20,7 +20,7 @@ public:
     Color *Render();
 	int imageWidth();
 	int imageHeight();
-
+	I_PhotonMap &photonMap();
 private:
 	Camera *cam();
 	Point2D calc_image_coords(Point3D pt);

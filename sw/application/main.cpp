@@ -68,7 +68,10 @@ int main(int argc, char *argv[])
     save_color_image("standard.png", normal_renderer.Render(), width, height);
     PhotonSceneRenderer photon_renderer(*scene, num_photons);
     save_color_image("photons.png", photon_renderer.Render(), width, height);
-    PhotonMappingSceneRenderer photon_mapping_renderer(*scene, samples, num_photons);
+
+	PhotonKdTree kd = *(new PhotonKdTree(photon_renderer.photonMap()));
+
+    PhotonMappingSceneRenderer photon_mapping_renderer(*scene, kd, samples, width, height);
     save_color_image("final.png", photon_mapping_renderer.Render(), width, height);
     // delete_photon_map(photon_map);
 

@@ -19,7 +19,8 @@ class SceneObject;
 class PhotonMappingSceneRenderer : public I_SceneRenderer
 {
 public:
-	PhotonMappingSceneRenderer(I_Scene &scene, int samples, int num_photons);
+	PhotonMappingSceneRenderer(I_Scene &scene, I_KdTree &kd, int num_samples, 
+		int width, int height);
 	~PhotonMappingSceneRenderer();
 
     Color *Render();
@@ -40,10 +41,9 @@ private:
 	bool trace_ray(I_KdTree *kd, Ray ray, Color *color, int depth);
 
 	I_Scene &scene_;
+	I_KdTree &kd_;
 	int imageWidth_;
 	int imageHeight_;
-	I_KdTree *kd_;
-	I_PhotonMap *photonMap_;
     int MAX_DEPTH;
     Color BG_COLOR;
     double NORM_EPSILON;

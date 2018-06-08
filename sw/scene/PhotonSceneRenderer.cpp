@@ -98,3 +98,8 @@ Point2D PhotonSceneRenderer::calc_image_coords(Point3D pt)
 
     return Point2D(pt[0], pt[1]);
 }
+
+I_PhotonMap &PhotonSceneRenderer::photonMap()
+{
+	return *photonMap_;
+}
