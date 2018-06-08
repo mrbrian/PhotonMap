@@ -30,7 +30,6 @@ public:
 private:
 	Color radiance_estimate(I_KdTree *kd, SurfacePoint end_pt);
 	Color Render(I_KdTree *kd, int x, int y);
-	Color *Render(I_KdTree *kd);
 	Camera *cam();
 	ImagePlane *imagePlane();
 	std::vector<SceneObject*> *objects();

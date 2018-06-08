@@ -32,11 +32,6 @@ PhotonMappingSceneRenderer::~PhotonMappingSceneRenderer()
 
 }
 
-Color *PhotonMappingSceneRenderer::Render()
-{
-	return Render(&kd_);
-}
-
 Color PhotonMappingSceneRenderer::radiance_estimate(I_KdTree *kd, SurfacePoint end_pt)
 {
     // how much light is at this point?
@@ -115,7 +110,7 @@ Color PhotonMappingSceneRenderer::Render(I_KdTree *kd, int x, int y)
     return c;
 }
 
-Color *PhotonMappingSceneRenderer::Render(I_KdTree *kd)
+Color *PhotonMappingSceneRenderer::Render()
 {
     Color * result = new Color[cam()->imgWidth * cam()->imgHeight];
     // iterate over the pixels & set colour values
@@ -128,8 +123,7 @@ Color *PhotonMappingSceneRenderer::Render(I_KdTree *kd)
 
         for (int y = 0; y < cam()->imgHeight; y++)
         {
-
-            result[x + y * cam()->imgWidth] = Render(kd, x, y);
+            result[x + y * cam()->imgWidth] = Render(&kd_, x, y);
         }
     }
     return result;
