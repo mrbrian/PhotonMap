@@ -1,13 +1,13 @@
-#ifndef PHOTON_H
-#define PHOTON_H
-
+#pragma once
 #define _USE_MATH_DEFINES
 
 #include "algebra.h"
 
 using namespace std;
 
-struct photon {
+class photon
+{
+public:
     float x, y, z;              // position
     Color color;         // power packed as 4 chars
     double power;
@@ -38,6 +38,4 @@ struct photon {
        return _x*_x + _y*_y + _z*_z;
     }
 };
-
-#endif //PHOTON
 

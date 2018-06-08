@@ -18,7 +18,7 @@ class SceneObject;
 class PhotonMappingSceneRenderer : public I_SceneRenderer
 {
 public:
-	PhotonMappingSceneRenderer(I_Scene &scene, int num_samples);
+	PhotonMappingSceneRenderer(I_Scene &scene, int samples, int num_photons);
 	~PhotonMappingSceneRenderer();
 
     Color *Render();

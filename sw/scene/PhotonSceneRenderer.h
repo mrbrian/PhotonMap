@@ -13,7 +13,7 @@ class I_Scene;
 class PhotonSceneRenderer : public I_SceneRenderer
 {
 public:
-	PhotonSceneRenderer(I_Scene &scene);
+	PhotonSceneRenderer(I_Scene &scene, int num_photons);
 	~PhotonSceneRenderer();
 
     Color *Render();
@@ -28,4 +28,5 @@ private:
 	int imageWidth_;
 	int imageHeight_;
 	std::vector<photon*> *photon_map;
+	int num_photons_;
 };

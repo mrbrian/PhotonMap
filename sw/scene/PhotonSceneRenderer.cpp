@@ -2,8 +2,9 @@
 #include <photon.h>
 #include <PhotonSceneRenderer.h>
 
-PhotonSceneRenderer::PhotonSceneRenderer(I_Scene &scene)
+PhotonSceneRenderer::PhotonSceneRenderer(I_Scene &scene, int num_photons)
 	: scene_(scene)
+    , num_photons_(num_photons)
 {
 }
 

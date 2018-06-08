@@ -8,7 +8,7 @@
 #include <photon.h>
 #include <I_KdTree.h>
 
-PhotonMappingSceneRenderer::PhotonMappingSceneRenderer(I_Scene &scene, int num_samples)
+PhotonMappingSceneRenderer::PhotonMappingSceneRenderer(I_Scene &scene, int num_samples, int num_photons)
 	: scene_(scene)
 {
     MAX_DEPTH = 5;

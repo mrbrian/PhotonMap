@@ -1,16 +1,18 @@
-
-#include "algebra.h"
-#include "kdtree/kdtree.h"
-#include "misc.h"
-#include "scene.h"
+#include <RasterSceneRenderer.h>
+#include <algebra.h>
 #include <assert.h>
 #include <cornellBoxScene.h>
 #include <I_KdTree.h>
 #include <I_Scene.h>
-#include <lodepng.h>
 #include <I_SceneRenderer.h>
 #include <iostream>
+#include <kdtree/kdtree.h>
+#include <lodepng.h>
+#include <misc.h>
 #include <photonKdTree.h>
+#include <PhotonMappingSceneRenderer.h>
+#include <PhotonSceneRenderer.h>
+#include <scene.h>
 #include <stdio.h>
 #include <time.h>
 #include <vector>
@@ -47,58 +49,9 @@ void save_color_image (const char *filename, Color *image, int width, int height
     lodepng::encode(filename, img, width, height);
 }
 
-void render_photons(I_SceneRenderer &scene, vector<photon*> *photon_map, const char* outputStr)
-{
-    int width = scene.imageWidth();
-    int height = scene.imageHeight();
-
-    Color *resultImg = scene.Render(photon_map);
-
-    save_color_image(outputStr, resultImg, width, height);
-    delete [] resultImg;
-}
-
-
-void normal_render(I_SceneRenderer &scene, const char* outputStr)
-{
-    int width = scene.imageWidth();
-    int height = scene.imageHeight();
-
-    // create new image
-    std::vector<unsigned char> image;
-    image.resize(width * height * 4);
-
-    Color *resultImg = scene.Render();
-
-    save_color_image(outputStr, resultImg, width, height);
-    delete [] resultImg;
-}
-
-void final_render(I_SceneRenderer &scene, vector<photon*> *photons, const char* outputStr)
-{
-    int width = scene.imageWidth();
-    int height = scene.imageHeight();
-    I_KdTree *tree = new PhotonKdTree(photons);
-
-    Color *resultImg = scene.Render(tree);
-
-    save_color_image(outputStr, resultImg, width, height);
-    delete tree;
-    delete [] resultImg;
-}
-
-void delete_photon_map(vector<photon*> &map)
-{
-    for (std::vector< photon* >::iterator it = map.begin() ; it != map.end(); ++it)
-    {
-        delete (*it);
-    }
-    map.clear();
-}
-
 int main(int argc, char *argv[])
 {
-	I_SceneRenderer *scene;
+	I_Scene *scene;
 
     // image width and height
     int width  = atoi(argv[1]);
@@ -106,18 +59,18 @@ int main(int argc, char *argv[])
     int samples = atoi(argv[3]);
     int num_photons = atoi(argv[4]);
 
-    scene = new CornellBoxScene(width, height, samples);
+    scene = new CornellBoxScene(width, height);
 
     // start timing...
     clock_t start = clock();
 
-    vector<photon*> photon_map;
-    scene->emit_photons(num_photons, &photon_map);
-
-    normal_render(*scene, "standard.png");
-    render_photons(*scene, &photon_map, "photons.png");
-    final_render(*scene, &photon_map, "final.png");
-    delete_photon_map(photon_map);
+    RasterSceneRenderer normal_renderer(*scene);
+    save_color_image("standard.png", normal_renderer.Render(), width, height);
+    PhotonSceneRenderer photon_renderer(*scene, num_photons);
+    save_color_image("photons.png", photon_renderer.Render(), width, height);
+    PhotonMappingSceneRenderer photon_mapping_renderer(*scene, samples, num_photons);
+    save_color_image("final.png", photon_mapping_renderer.Render(), width, height);
+    // delete_photon_map(photon_map);
 
     // stop timing
     clock_t end = clock();
