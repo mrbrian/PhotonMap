@@ -1,9 +1,22 @@
 #include <algebra.h>
 #include <gtest/gtest.h>
-#include <PhotonTest.h>
 #include <stdio.h>
+#include <photon.h>
 
-TEST_F(PhotonTest, IsDist2Correct)
+class TestPhoton : public ::testing::Test
+{
+protected:
+	virtual void SetUp()
+	{
+		patient_ = new photon();
+	}
+
+	// virtual void TearDown() {}
+
+	photon* patient_;
+};
+
+TEST_F(TestPhoton, IsDist2Correct)
 {
 	photon other;
 	other.set_position(patient_->get_position());

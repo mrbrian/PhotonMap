@@ -11,21 +11,16 @@ def configure(conf):
         conf.load('compiler_cxx waf_unit_test')
 
 def build(bld):
-        bld(features='cxx cxxprogram test',
-                source='TestPhoton.cpp',
-                target='TestPhoton',
-                name='TestPhoton',
-                includes=['.', '..'],
-                lib=['gtest'],
-                use=['GTEST', 'PTHREAD', 'scene'])
-
-        bld(features='cxx cxxprogram test',
-                source='TestScene.cpp',
-                target='TestScene',
-                name='TestScene',
-                includes=['.', '..'],
-                lib=['gtest'],
-                use=['GTEST', 'PTHREAD', 'scene'])
+        sources = bld.path.ant_glob('*.cpp')
+        for x in sources:
+                test_name = x.name.split('.')[0]
+                bld(features='cxx cxxprogram test',
+                        target=test_name,
+                        name=test_name,
+                        source = x.name,
+                        includes=['.', '..'],
+                        lib=['gtest'],
+                        use=['GTEST', 'PTHREAD', 'scene'])
 
         from waflib.Tools import waf_unit_test
         bld.add_post_fun(waf_unit_test.summary)

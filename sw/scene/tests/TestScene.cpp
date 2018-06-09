@@ -2,10 +2,27 @@
 #include <gtest/gtest.h>
 #include <Light.h>
 #include <scene.h>
-#include <SceneTest.h>
 #include <stdio.h>
 
-// TEST_F(SceneTest, CorrectAmountOfPhotons)
+class TestScene : public ::testing::Test
+{
+protected:
+	virtual void SetUp()
+	{
+		patient_ = new Scene(10);
+	}
+
+	// virtual void TearDown() {}
+
+    Camera cam_;
+    ImagePlane *imgPlane_;
+    std::vector<SceneObject*> objects_;
+    std::vector<Light*> lights_;
+
+	Scene* patient_;
+};
+
+// TEST_F(TestScene, CorrectAmountOfPhotons)
 // {
 // 	vector<photon*> out_photons;
 // 	Light light(Point3D(0,0,0), Color(0,0,0), 0);
@@ -31,7 +48,7 @@
 // }
 
 
-// TEST_F(SceneTest, WillDeletePhotons)
+// TEST_F(TestScene, WillDeletePhotons)
 // {
 // 	vector<photon*> out_photons;
 // 	Light light(Point3D(0,0,0), Color(0,0,0), 0);
