@@ -1,5 +1,5 @@
+#include <misc.h>
 #include <Quad.h>
-#include <shapes.h>
 #include <Triangle.h>
 
 char const *Quad::type()

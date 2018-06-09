@@ -4,7 +4,6 @@
 #include <camera.h>
 #include <I_Scene.h>
 #include <polyroots.h>
-#include <shapes.h>
 #include <Ray.h>
 #include <SurfacePoint.h>
 #include <vector>

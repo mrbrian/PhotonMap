@@ -78,7 +78,7 @@ void Triangle::point_on_surface(Point3D &pos, Vector3D &norm)
 	norm = normal_;
 }
 
-Vector3D &Triangle::normal() const
+Vector3D Triangle::normal() const
 {
 	return Vector3D(normal_);
 }

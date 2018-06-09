@@ -2,7 +2,6 @@
 
 #include <algebra.h>
 #include <I_SceneObject.h>
-#include <shapes.h>
 
 class Triangle;
 

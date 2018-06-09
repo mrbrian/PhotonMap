@@ -6,8 +6,6 @@
 #include "misc.h"
 #include <I_SceneObject.h>
 
-class Quad;
-
 class Sphere : public I_SceneObject
 {
 public:

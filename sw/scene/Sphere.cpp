@@ -1,7 +1,4 @@
-#include <quad.h>
-#include <shapes.h>
-
-extern double RAND_2();
+#include <Sphere.h>
 
 char const *Sphere::type()
 {

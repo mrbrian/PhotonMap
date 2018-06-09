@@ -3,9 +3,9 @@
 #include <imagePlane.h>
 #include <LightObject.h>
 #include <Material.h>
+#include <misc.h>
 #include <Quad.h>
 #include <scene.h>
-#include <shapes.h>
 
 CornellBoxScene::CornellBoxScene(int width, int height)
 {

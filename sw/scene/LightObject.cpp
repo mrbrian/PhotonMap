@@ -1,12 +1,13 @@
+#include <I_SceneObject.h>
 #include <LightObject.h>
-#include <scene.h>
+#include <misc.h>
 #include <photon.h>
+#include <scene.h>
 
 LightObject::LightObject(Point3D pos, Color c, double in_watts, I_SceneObject *o)
     : Light(pos, c, in_watts)
 {
     obj = o;
-
 }
 
 LightObject::~LightObject()

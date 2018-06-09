@@ -1,3 +1,5 @@
+#pragma once
+
 #include <algebra.h>
 #include <I_SceneObject.h>
 
