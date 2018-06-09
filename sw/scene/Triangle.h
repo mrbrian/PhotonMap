@@ -13,4 +13,8 @@ public:
     virtual double area(Point3D a, Point3D b, Point3D c);
 
     Point3D verts[3];
+	Vector3D &normal() const;
+
+private:
+	Vector3D normal_;
 };

@@ -15,5 +15,4 @@ public:
     virtual double intersect(Point3D o, Vector3D v, Vector3D *n) = 0;
 
     Material *material;
-    Vector3D normal;
 };

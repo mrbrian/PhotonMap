@@ -14,5 +14,6 @@ public:
     Cube(Point3D center, float scale, Material *mat);
     void Transform(Matrix4x4 m);
     double intersect(Point3D o, Vector3D v, Vector3D *n);
+	virtual void point_on_surface(Point3D &pos, Vector3D &norm);
 };
 

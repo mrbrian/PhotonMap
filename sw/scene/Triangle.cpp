@@ -1,3 +1,4 @@
+#include <misc.h>
 #include <Triangle.h>
 
 char const *Triangle::type()
@@ -5,13 +6,13 @@ char const *Triangle::type()
     return "Triangle";
 }
 
-Triangle::Triangle(Pointt3D p1, Point3D p2, Point3D p3, Material *mat)
+Triangle::Triangle(Point3D p1, Point3D p2, Point3D p3, Material *mat)
 {
     material = mat;
     verts[0] = p1;
     verts[1] = p2;
     verts[2] = p3;
-    normal = -(verts[1] - verts[0]).cross(verts[2] - verts[0]);
+    normal_ = -(verts[1] - verts[0]).cross(verts[2] - verts[0]);
 }
 
 double Triangle::area(Point3D a, Point3D b, Point3D c)
@@ -63,4 +64,21 @@ void Triangle::Transform(Matrix4x4 m)
     {
         verts[i] = m * verts[i];
     }
+}
+
+void Triangle::point_on_surface(Point3D &pos, Vector3D &norm)
+{
+	Vector3D v1 = verts[1] - verts[0];
+	Vector3D v2 = verts[2] - verts[0];
+	double factor = misc::RAND_2();
+	pos = verts[0] +
+		factor * v1 +
+		(1 - factor) * v2;
+	
+	norm = normal_;
+}
+
+Vector3D &Triangle::normal() const
+{
+	return Vector3D(normal_);
 }

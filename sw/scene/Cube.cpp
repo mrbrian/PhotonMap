@@ -58,3 +58,9 @@ double Cube::intersect(Point3D o, Vector3D v, Vector3D *n)
         return -1;
     return t_min;
 }
+
+void Cube::point_on_surface(Point3D &pos, Vector3D &norm)
+{
+	int faceIndex = rand() % 6;
+	return faces[faceIndex]->point_on_surface(pos, norm);
+}

@@ -1,3 +1,4 @@
+#include <Pyramid.h>
 #include <Triangle.h>
 
 char const *Pyramid::type()

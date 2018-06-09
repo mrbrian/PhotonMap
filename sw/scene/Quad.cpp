@@ -76,5 +76,5 @@ void Quad::point_on_surface(Point3D &pos, Vector3D &normal)
     double v_pct = misc::RAND_2();
 
     pos = (topleft + (h_pct * right) + (v_pct * down));
-    normal = tris[0]->normal;
+    normal = tris[0]->normal();
 }
