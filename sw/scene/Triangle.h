@@ -1,18 +1,16 @@
-#pragma once
-
 #include <algebra.h>
-#include <material.h>
+#include <I_SceneObject.h>
 
-class SceneObject
+class Triangle : public I_SceneObject
 {
 public:
-	virtual ~SceneObject();
+    Triangle(Point3D p1, Point3D p2, Point3D p3, Material *mat);
 
     virtual char const *type();
     virtual void Transform(Matrix4x4 m);
     virtual void point_on_surface(Point3D &pos, Vector3D &norm);
     virtual double intersect(Point3D o, Vector3D v, Vector3D *n);
+    virtual double area(Point3D a, Point3D b, Point3D c);
 
-    Material *material;
-    Vector3D normal;
+    Point3D verts[3];
 };

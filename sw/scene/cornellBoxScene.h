@@ -7,7 +7,7 @@
 class Color;
 class I_KdTree;
 class LightObject;
-class SceneObject;
+class I_SceneObject;
 class Light;
 class Material;
 class photon;
@@ -21,7 +21,7 @@ public:
 
 	Camera *cam();
 	ImagePlane *imgPlane();
-	std::vector<SceneObject*> *objects();
+	std::vector<I_SceneObject*> *objects();
 	std::vector<Light*> *lights();
 
 private:

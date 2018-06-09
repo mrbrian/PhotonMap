@@ -1,5 +1,4 @@
-#ifndef MATERIAL
-#define MATERIAL
+#pragma once
 
 #include "algebra.h"
 
@@ -41,5 +40,3 @@ public:
     CheckerMaterial(Color a, Color d, Color s, double in_p, Color r, float sc);
     Color GetKd(Point3D p);
 };
-
-#endif // MATERIAL

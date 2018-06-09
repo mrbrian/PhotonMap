@@ -16,7 +16,7 @@ protected:
 
     Camera cam_;
     ImagePlane *imgPlane_;
-    std::vector<SceneObject*> objects_;
+    std::vector<I_SceneObject*> objects_;
     std::vector<Light*> lights_;
 
 	Scene* patient_;

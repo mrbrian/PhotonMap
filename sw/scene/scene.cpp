@@ -25,7 +25,7 @@ Scene::Scene(
 	Camera *cam,
 	ImagePlane *imgPlane,
 	std::vector<Light*> *lights,
-	std::vector<SceneObject*> *objects)
+	std::vector<I_SceneObject*> *objects)
 	: cam_(cam)
 	, imgPlane_ (imgPlane)
 	, lights_(lights)
@@ -40,7 +40,7 @@ Scene::Scene(int num_samples)
 
 Scene::~Scene()
 {
-    for (std::vector<SceneObject* >::iterator it = objects_->begin() ; it != objects_->end(); ++it)
+    for (std::vector<I_SceneObject* >::iterator it = objects_->begin() ; it != objects_->end(); ++it)
     {
         delete (*it);
     }
@@ -50,9 +50,9 @@ Scene::~Scene()
 
 void Scene::Transform(Matrix4x4 m)
 {
-    for(std::vector<SceneObject*>::iterator it = objects_->begin(); it != objects_->end(); ++it)
+    for(std::vector<I_SceneObject*>::iterator it = objects_->begin(); it != objects_->end(); ++it)
     {
-        SceneObject *obj = (*it);
+        I_SceneObject *obj = (*it);
         obj->Transform(m);
     }
     for(std::vector<Light*>::iterator it = lights_->begin(); it != lights_->end(); ++it)
@@ -121,7 +121,7 @@ ImagePlane *Scene::imgPlane()
 	return imgPlane_;
 }
 
-std::vector<SceneObject*> *Scene::objects()
+std::vector<I_SceneObject*> *Scene::objects()
 {
 	return objects_;
 }

@@ -1,20 +1,21 @@
 #include <camera.h>
-#include <I_Scene.h>
-#include <imagePlane.h>
-#include <Light.h>
-#include <PhotonMappingSceneRenderer.h>
-#include <Ray.h>
-#include <PhotonMap.h>
-#include <sceneObject.h>
-#include <photon.h>
 #include <I_KdTree.h>
 #include <I_PhotonMap.h>
+#include <I_Scene.h>
+#include <I_SceneObject.h>
+#include <imagePlane.h>
+#include <Light.h>
+#include <Material.h>
+#include <photon.h>
+#include <PhotonMap.h>
+#include <PhotonMappingSceneRenderer.h>
+#include <Ray.h>
 
 PhotonMappingSceneRenderer::PhotonMappingSceneRenderer(
-	I_Scene &scene, 
-	I_KdTree &kd, 
+	I_Scene &scene,
+	I_KdTree &kd,
 	int num_samples,
-	int width, 
+	int width,
 	int height)
 	: scene_(scene)
 	, kd_(kd)
@@ -137,16 +138,16 @@ bool PhotonMappingSceneRenderer::trace_ray(I_KdTree *kd, Ray ray, Color *color, 
 
     double t_min = INFINITY;
     Vector3D n_min;
-    SceneObject *hitObject = NULL;
+    I_SceneObject *hitObject = NULL;
     ray.direction.normalize();
 
     Color &col = *color;
     if (depth == 1)         // start ... with no colour
         col = Color(0,0,0);
 
-    for(std::vector<SceneObject*>::iterator it = objects()->begin(); it != objects()->end(); ++it)
+    for(std::vector<I_SceneObject*>::iterator it = objects()->begin(); it != objects()->end(); ++it)
     {
-        SceneObject *obj = (*it);
+        I_SceneObject *obj = (*it);
 
         Vector3D n;
         double t = obj->intersect(ray.origin, ray.direction, &n);      // whats the n?
@@ -252,7 +253,7 @@ ImagePlane *PhotonMappingSceneRenderer::imagePlane()
 	return scene_.imgPlane();
 }
 
-std::vector<SceneObject*> *PhotonMappingSceneRenderer::objects()
+std::vector<I_SceneObject*> *PhotonMappingSceneRenderer::objects()
 {
 	return scene_.objects();
 }

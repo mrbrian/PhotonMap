@@ -11,7 +11,7 @@
 
 class ImagePlane;
 class Light;
-class SceneObject;
+class I_SceneObject;
 
 using namespace std;
 
@@ -22,7 +22,7 @@ public:
 		Camera *cam,
 		ImagePlane *imgPlane,
 		std::vector<Light*> *lights,
-		std::vector<SceneObject*> *objects);
+		std::vector<I_SceneObject*> *objects);
 	Scene(int num_samples);
 
     ~Scene();
@@ -33,14 +33,14 @@ public:
 
 	Camera *cam();
 	ImagePlane *imgPlane();
-	std::vector<SceneObject*> *objects();
+	std::vector<I_SceneObject*> *objects();
 	std::vector<Light*> *lights();
 
 private:
 	int samples_per_pixel_;
 	Camera *cam_;
 	ImagePlane *imgPlane_;
-	std::vector<SceneObject*> *objects_;
+	std::vector<I_SceneObject*> *objects_;
 	std::vector<Light*> *lights_;
 
 };

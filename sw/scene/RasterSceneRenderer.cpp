@@ -1,10 +1,11 @@
 #include <camera.h>
 #include <I_Scene.h>
+#include <I_SceneObject.h>
 #include <imagePlane.h>
 #include <Light.h>
+#include <Material.h>
 #include <RasterSceneRenderer.h>
 #include <Ray.h>
-#include <sceneObject.h>
 
 RasterSceneRenderer::RasterSceneRenderer(I_Scene &scene)
 	: scene_(scene)
@@ -108,16 +109,16 @@ bool RasterSceneRenderer::trace_ray(Point3D o, Vector3D v, Color *color, int dep
 
     double t_min = INFINITY;
     Vector3D n_min;
-    SceneObject *hitObject = NULL;
+    I_SceneObject *hitObject = NULL;
     v.normalize();
 
     Color &col = *color;
     if (depth == 1)         // start ... with no colour
         col = Color(0,0,0);
 
-    for(std::vector<SceneObject*>::iterator it = objects()->begin(); it != objects()->end(); ++it)
+    for(std::vector<I_SceneObject*>::iterator it = objects()->begin(); it != objects()->end(); ++it)
     {
-        SceneObject *obj = (*it);
+        I_SceneObject *obj = (*it);
 
         Vector3D n;
         double t = obj->intersect(o, v, &n);      // whats the n?
@@ -175,7 +176,7 @@ bool RasterSceneRenderer::trace_ray(Point3D o, Vector3D v, Color *color, int dep
     return true;
 }
 
-std::vector<SceneObject*> *RasterSceneRenderer::objects()
+std::vector<I_SceneObject*> *RasterSceneRenderer::objects()
 {
     return scene_.objects();
 }
@@ -194,9 +195,9 @@ bool RasterSceneRenderer::intersection_test(I_Scene *scene, Point3D o, Point3D l
 
     float tmin = INFINITY;
 
-    for(std::vector<SceneObject*>::iterator it = scene->objects()->begin(); it != scene->objects()->end(); ++it)
+    for(std::vector<I_SceneObject*>::iterator it = scene->objects()->begin(); it != scene->objects()->end(); ++it)
     {
-        SceneObject *object= (*it);
+        I_SceneObject *object= (*it);
 
         Vector3D n;
         double t = object->intersect(o, v, &n);      // whats the n?    -1 if no hit.

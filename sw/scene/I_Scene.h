@@ -4,7 +4,7 @@
 #include <vector>
 
 class ImagePlane;
-class SceneObject;
+class I_SceneObject;
 class Light;
 
 class I_Scene
@@ -16,6 +16,6 @@ public:
 
 	virtual Camera *cam() = 0;
 	virtual ImagePlane *imgPlane() = 0;
-	virtual std::vector<SceneObject*> *objects() = 0;
+	virtual std::vector<I_SceneObject*> *objects() = 0;
 	virtual std::vector<Light*> *lights() = 0;
 };

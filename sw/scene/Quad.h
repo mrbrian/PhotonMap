@@ -1,12 +1,12 @@
 #pragma once
 
 #include <algebra.h>
-#include <sceneObject.h>
+#include <I_SceneObject.h>
 #include <shapes.h>
 
 class Triangle;
 
-class Quad : public SceneObject
+class Quad : public I_SceneObject
 {
 public:
     Triangle **tris;    // array of triangle pointers

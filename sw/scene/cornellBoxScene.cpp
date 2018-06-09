@@ -1,8 +1,9 @@
 #include <cornellBoxScene.h>
+#include <Cube.h>
 #include <imagePlane.h>
 #include <LightObject.h>
-#include <material.h>
-#include <quad.h>
+#include <Material.h>
+#include <Quad.h>
 #include <scene.h>
 #include <shapes.h>
 
@@ -31,7 +32,7 @@ CornellBoxScene::CornellBoxScene(int width, int height)
     mat_floor = new Material(Color(0, 0, 0), Color(0.6f, 0.6f, 0.6f), Color(0, 0, 0), 10, Color(0, 0, 0));
 
 	std::vector<Light*> *lights = new std::vector<Light*>();
-	std::vector<SceneObject*> *objects = new std::vector<SceneObject*>();
+	std::vector<I_SceneObject*> *objects = new std::vector<I_SceneObject*>();
     // Ceiling
     Quad *q_1 = new Quad(
         Point3D(2.75, 2.75, -10.5),
@@ -142,7 +143,7 @@ ImagePlane *CornellBoxScene::imgPlane()
 	return scene->imgPlane();
 }
 
-std::vector<SceneObject*> *CornellBoxScene::objects()
+std::vector<I_SceneObject*> *CornellBoxScene::objects()
 {
 	return scene->objects();
 }

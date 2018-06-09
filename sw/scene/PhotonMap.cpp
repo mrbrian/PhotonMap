@@ -1,10 +1,10 @@
 #include <misc.h>
 #include <Light.h>
-#include <sceneObject.h>
+#include <I_SceneObject.h>
 #include <I_Scene.h>
 #include <photon.h>
 #include <PhotonMap.h>
-#include <material.h>
+#include <Material.h>
 #include <Ray.h>
 
 PhotonMap::PhotonMap(I_Scene& scene, int num_photons)
@@ -106,7 +106,7 @@ bool PhotonMap::trace_primary_ray(Point3D in_pos, Vector3D in_dir, Color *in_clr
 
 	double t_min = INFINITY;
 	Vector3D n_min;
-	SceneObject *hitObject = NULL;
+	I_SceneObject *hitObject = NULL;
 	in_dir.normalize();
 
 	// find closest intersection point, the object
@@ -129,15 +129,15 @@ bool PhotonMap::trace_primary_ray(Point3D in_pos, Vector3D in_dir, Color *in_clr
 	return true;
 }
 
-SceneObject *PhotonMap::find_closest_intersection(Point3D o, Vector3D v, double *t_min_ptr, Vector3D *n_min_ptr)
+I_SceneObject *PhotonMap::find_closest_intersection(Point3D o, Vector3D v, double *t_min_ptr, Vector3D *n_min_ptr)
 {
-	SceneObject *hitObject = NULL;
+	I_SceneObject *hitObject = NULL;
 	double &t_min = *t_min_ptr;
 	Vector3D &n_min = *n_min_ptr;
 
-	for (std::vector<SceneObject*>::iterator it = scene_.objects()->begin(); it != scene_.objects()->end(); ++it)
+	for (std::vector<I_SceneObject*>::iterator it = scene_.objects()->begin(); it != scene_.objects()->end(); ++it)
 	{
-		SceneObject *obj = (*it);
+		I_SceneObject *obj = (*it);
 
 		Vector3D n;
 		double t = obj->intersect(o, v, &n);      // whats the n?

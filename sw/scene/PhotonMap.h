@@ -5,6 +5,7 @@
 #include <Ray.h>
 
 class I_Scene;
+class I_SceneObject;
 class Light;
 class Material;
 class photon;
@@ -22,7 +23,7 @@ private:
 	void initialize_photons(std::vector<photon*> &out_photons);
 	std::vector<Light*> *lights();
 	void trace_photon(photon *in_pho, int depth, std::vector<const photon*> *out_list);
-	SceneObject *find_closest_intersection(Point3D o, Vector3D v, double *t_min_ptr, Vector3D *n_min_ptr);
+	I_SceneObject *find_closest_intersection(Point3D o, Vector3D v, double *t_min_ptr, Vector3D *n_min_ptr);
 		RayType russian_roulette(Material *mat);
 	void bounce_photon(RayType ray_type, Point3D *i_pos, Vector3D *i_normal, Vector3D *i_reflect,
 		Vector3D *i_refract, Color *i_clr, double energy, int depth, 

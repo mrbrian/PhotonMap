@@ -1,4 +1,4 @@
-#include "material.h"
+#include <Material.h>
 
 #define DEF_REFLECT     Color(0.1, 0.1, 0.1)
 

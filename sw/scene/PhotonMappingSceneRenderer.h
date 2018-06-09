@@ -14,7 +14,7 @@ class I_Scene;
 class ImagePlane;
 class Light;
 class photon;
-class SceneObject;
+class I_SceneObject;
 
 class PhotonMappingSceneRenderer : public I_SceneRenderer
 {
@@ -32,7 +32,7 @@ private:
 	Color Render(I_KdTree *kd, int x, int y);
 	Camera *cam();
 	ImagePlane *imagePlane();
-	std::vector<SceneObject*> *objects();
+	std::vector<I_SceneObject*> *objects();
 	std::vector<Light*> *lights();
 	Color BRDF(SurfacePoint &x, Vector3D& view, Vector3D& pd);
 
