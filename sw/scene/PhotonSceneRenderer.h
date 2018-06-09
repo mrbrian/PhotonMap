@@ -14,7 +14,7 @@ class I_Scene;
 class PhotonSceneRenderer : public I_SceneRenderer
 {
 public:
-	PhotonSceneRenderer(I_Scene &scene, int num_photons);
+	PhotonSceneRenderer(I_Scene &scene, I_PhotonMap &photonMap);
 	~PhotonSceneRenderer();
 
     Color *Render();
@@ -28,6 +28,5 @@ private:
 	I_Scene &scene_;
 	int imageWidth_;
 	int imageHeight_;
-	int num_photons_;
-	I_PhotonMap *photonMap_;
+	I_PhotonMap &photonMap_;
 };

@@ -1,4 +1,3 @@
-#include <RasterSceneRenderer.h>
 #include <algebra.h>
 #include <assert.h>
 #include <cornellBoxScene.h>
@@ -10,8 +9,10 @@
 #include <lodepng.h>
 #include <misc.h>
 #include <photonKdTree.h>
+#include <PhotonMap.h>
 #include <PhotonMappingSceneRenderer.h>
 #include <PhotonSceneRenderer.h>
+#include <RasterSceneRenderer.h>
 #include <scene.h>
 #include <stdio.h>
 #include <time.h>
@@ -66,14 +67,15 @@ int main(int argc, char *argv[])
 
     RasterSceneRenderer normal_renderer(*scene);
     save_color_image("standard.png", normal_renderer.Render(), width, height);
-    PhotonSceneRenderer photon_renderer(*scene, num_photons);
+
+    PhotonMap photonMap(*scene, num_photons);
+    PhotonSceneRenderer photon_renderer(*scene, photonMap);
     save_color_image("photons.png", photon_renderer.Render(), width, height);
 
-	PhotonKdTree kd(photon_renderer.photonMap());
+	PhotonKdTree kd(photonMap);
 
-    PhotonMappingSceneRenderer photon_mapping_renderer(*scene, kd, samples, width, height);
-    save_color_image("final.png", photon_mapping_renderer.Render(), width, height);
-    // delete_photon_map(photon_map);
+    // PhotonMappingSceneRenderer photon_mapping_renderer(*scene, kd, samples, width, height);
+    // save_color_image("final.png", photon_mapping_renderer.Render(), width, height);
 
     // stop timing
     clock_t end = clock();

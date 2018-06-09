@@ -3,10 +3,9 @@
 #include <PhotonMap.h>
 #include <PhotonSceneRenderer.h>
 
-PhotonSceneRenderer::PhotonSceneRenderer(I_Scene &scene, int num_photons)
-	: scene_(scene)
-    , num_photons_(num_photons)
-	, photonMap_(new PhotonMap(scene, num_photons))
+PhotonSceneRenderer::PhotonSceneRenderer(I_Scene& scene, I_PhotonMap &photonMap)
+    : scene_(scene)
+    , photonMap_(photonMap)
 {
 }
 
@@ -27,9 +26,9 @@ Color *PhotonSceneRenderer::Render()
         }
     }
 
-    for(int i = 0; i < photonMap_->count(); i++)
+    for(int i = 0; i < photonMap_.count(); i++)
     {
-        const photon *p = &photonMap_->getPhoton(i);
+        const photon *p = &photonMap_.getPhoton(i);
 
         // calc image space coordinates
         Point2D img_coords = calc_image_coords(p->get_position());
@@ -101,5 +100,5 @@ Point2D PhotonSceneRenderer::calc_image_coords(Point3D pt)
 
 I_PhotonMap &PhotonSceneRenderer::photonMap()
 {
-	return *photonMap_;
+	return photonMap_;
 }
