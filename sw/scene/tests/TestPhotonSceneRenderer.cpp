@@ -3,7 +3,18 @@
 #include <PhotonMap.h>
 #include <PhotonSceneRenderer.h>
 
-class TestPhotonSceneRenderer : public ::testing::Test
+struct PosCoordPair
+{
+	PosCoordPair(Point3D p, Point2D c)
+	{
+		position = p;
+		coord = c;
+	}
+	Point3D position;
+	Point2D coord;
+};
+
+class TestPhotonSceneRenderer : public ::testing::TestWithParam<const PosCoordPair*>
 {
 protected:
 	virtual void SetUp()
@@ -14,7 +25,13 @@ protected:
 		patient_ = new PhotonSceneRenderer(*scene_, *photonMap_);
 	}
 
-	// virtual void TearDown() {}
+	virtual void TearDown()
+	{
+		delete patient_;
+
+		delete photonMap_;
+		delete scene_;
+	}
 
    	CornellBoxScene* scene_;
 	PhotonMap *photonMap_;
@@ -22,10 +39,42 @@ protected:
 	PhotonSceneRenderer* patient_;
 };
 
-TEST_F(TestPhotonSceneRenderer, CorrectAmountOfPhotons)
+TEST_P(TestPhotonSceneRenderer, CorrectImageCoords)
 {
-	// setupRendererWithPhotonMap();
+	const PosCoordPair *pair = GetParam();
+	Point3D position = pair->position;
+	Point2D expectedCoord = pair->coord;
+	Point2D coord = patient_->calc_image_coords(position);
+	double EPSILON = 1e-6;
+
+	EXPECT_NEAR(coord[0], expectedCoord[0], EPSILON);
+	EXPECT_NEAR(coord[1], expectedCoord[1], EPSILON);
+
+	delete pair;
 }
+
+INSTANTIATE_TEST_CASE_P(CorrectImageCoords_Origin,
+                        TestPhotonSceneRenderer,
+                        ::testing::Values(
+                        	new PosCoordPair(
+                        		Point3D(0, 0, -5),
+                        	 	Point2D(25, 25))));
+
+
+INSTANTIATE_TEST_CASE_P(CorrectImageCoords_Up,
+                        TestPhotonSceneRenderer,
+                        ::testing::Values(
+                        	new PosCoordPair(
+                        		Point3D(0, 1, -5),
+                        	 	Point2D(25, 15))));
+
+
+INSTANTIATE_TEST_CASE_P(CorrectImageCoords_Down,
+                        TestPhotonSceneRenderer,
+                        ::testing::Values(
+                        	new PosCoordPair(
+                        		Point3D(0, -1, -5),
+                        	 	Point2D(25, 35))));
 
 int main(int argc, char** argv)
 {

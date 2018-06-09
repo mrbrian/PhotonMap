@@ -21,9 +21,10 @@ public:
 	int imageWidth();
 	int imageHeight();
 	I_PhotonMap &photonMap();
+	Point2D calc_image_coords(Point3D pt);
+
 private:
 	Camera *cam();
-	Point2D calc_image_coords(Point3D pt);
 
 	I_Scene &scene_;
 	int imageWidth_;

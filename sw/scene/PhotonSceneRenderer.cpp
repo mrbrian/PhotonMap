@@ -70,6 +70,7 @@ Point2D PhotonSceneRenderer::calc_image_coords(Point3D pt)
     Matrix4x4 m_screenCoords = Matrix4x4();           // make transform for converting NDC space to screenspace
     m_screenCoords[0][0] = -width / 2;
     m_screenCoords[1][1] = height / 2;
+    m_screenCoords = Matrix4x4::scaling(Vector3D(1,-1,1)) * m_screenCoords;
     m_screenCoords = Matrix4x4::translation(Vector3D(width / 2, height / 2, 0)) * m_screenCoords;
 
     // Apply the view matrix
