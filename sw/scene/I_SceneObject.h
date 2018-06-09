@@ -7,7 +7,7 @@ class Material;
 class I_SceneObject
 {
 public:
-	virtual ~I_SceneObject();
+	virtual ~I_SceneObject(){}
 
     virtual char const *type() = 0;
     virtual void Transform(Matrix4x4 m) = 0;
