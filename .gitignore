@@ -1,4 +1,7 @@
+.*
+*.pro
 build_directory
+*.png
 *.o
 sw/x64
 build
