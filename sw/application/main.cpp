@@ -54,6 +54,11 @@ int main(int argc, char *argv[])
 {
 	I_Scene *scene;
 
+    if (argc == 1)
+    {
+        printf("Usage: ./app width height #ofSamples #ofPhotons");
+        return 0;
+    }
     // image width and height
     int width  = atoi(argv[1]);
     int height = atoi(argv[2]);
@@ -74,8 +79,8 @@ int main(int argc, char *argv[])
 
 	PhotonKdTree kd(photonMap);
 
-    // PhotonMappingSceneRenderer photon_mapping_renderer(*scene, kd, samples, width, height);
-    // save_color_image("final.png", photon_mapping_renderer.Render(), width, height);
+    PhotonMappingSceneRenderer photon_mapping_renderer(*scene, kd, samples, width, height);
+    save_color_image("final.png", photon_mapping_renderer.Render(), width, height);
 
     // stop timing
     clock_t end = clock();
