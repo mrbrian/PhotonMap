@@ -9,6 +9,7 @@ def options(opt):
 
 def configure(cnf):
         cnf.load('compiler_cxx')
+        cnf.load('clang_compilation_database', tooldir=['waf-tools'])
         if sys.platform == 'linux2':
             cnf.check(features='cxx cxxprogram',
                lib=['pthread', 'gtest'],
