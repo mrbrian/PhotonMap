@@ -171,11 +171,6 @@ bool PhotonMappingSceneRenderer::trace_ray(I_KdTree *kd, Ray ray, Color *color, 
 
     p_int = p_int + 0.001 * n_min;      // pull back point a bit, avoid self intersection
 
-    // found closest intersection
-    Point3D p = ray.origin + t_min * ray.direction;
-
-    Vector3D n = n_min;
-
     // add radiance estimate
     SurfacePoint end_pt = SurfacePoint(p_int, n_min, hitObject->material);
     Color brdf = radiance_estimate(kd, end_pt);

@@ -17,6 +17,10 @@ PhotonMap::PhotonMap(I_Scene& scene, int num_photons)
 	emit_photons();
 }
 
+PhotonMap::~PhotonMap()
+{
+}
+
 const photon& PhotonMap::getPhoton(int i) const
 {
 	return *photonMap_.at(i);
@@ -100,7 +104,6 @@ bool PhotonMap::trace_primary_ray(Point3D in_pos, Vector3D in_dir, Color *in_clr
 	Point3D &out_pos = *_out_pos;
 	Vector3D &out_norm = *_out_norm;
 	Vector3D &out_reflect = *_out_reflect;
-	Vector3D &out_refract = *_out_refract;
 	Color &out_clr = *_out_clr;
 	Material &out_mat = *_out_mat;
 
