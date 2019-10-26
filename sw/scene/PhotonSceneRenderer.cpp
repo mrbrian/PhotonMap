@@ -44,16 +44,6 @@ Color *PhotonSceneRenderer::Render()
     return result;
 }
 
-int PhotonSceneRenderer::imageWidth()
-{
-	return imageWidth_;
-}
-
-int PhotonSceneRenderer::imageHeight()
-{
-	return imageHeight_;
-}
-
 Camera *PhotonSceneRenderer::cam()
 {
     return scene_.cam();

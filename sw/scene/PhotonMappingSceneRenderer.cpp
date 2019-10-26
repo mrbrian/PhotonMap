@@ -233,16 +233,6 @@ bool PhotonMappingSceneRenderer::trace_ray_lights(Point3D o, Vector3D v, Color *
     return true;
 }
 
-int PhotonMappingSceneRenderer::imageWidth()
-{
-	return imageWidth_;
-}
-
-int PhotonMappingSceneRenderer::imageHeight()
-{
-	return imageHeight_;
-}
-
 Camera *PhotonMappingSceneRenderer::cam()
 {
 	return scene_.cam();

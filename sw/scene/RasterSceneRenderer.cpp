@@ -42,16 +42,6 @@ Color *RasterSceneRenderer::Render()
     return result;
 }
 
-int RasterSceneRenderer::imageWidth()
-{
-	return imageWidth_;
-}
-
-int RasterSceneRenderer::imageHeight()
-{
-	return imageHeight_;
-}
-
 Camera *RasterSceneRenderer::cam()
 {
     return scene_.cam();

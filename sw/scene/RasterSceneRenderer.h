@@ -20,8 +20,6 @@ public:
 	~RasterSceneRenderer();
 
     Color *Render();
-	int imageWidth();
-	int imageHeight();
 
 private:
 	Camera *cam();

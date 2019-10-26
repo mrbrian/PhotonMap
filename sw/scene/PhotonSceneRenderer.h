@@ -18,8 +18,6 @@ public:
 	~PhotonSceneRenderer();
 
     Color *Render();
-	int imageWidth();
-	int imageHeight();
 	I_PhotonMap &photonMap();
 	Point2D calc_image_coords(Point3D pt);
 

@@ -24,8 +24,6 @@ public:
 	~PhotonMappingSceneRenderer();
 
     Color *Render();
-	int imageWidth();
-	int imageHeight();
 
 private:
 	Color radiance_estimate(I_KdTree *kd, SurfacePoint end_pt);
